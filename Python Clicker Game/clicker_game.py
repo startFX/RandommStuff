@@ -32,12 +32,11 @@ critical_hit_base = 8           # Base value for critical hit.
 critical_hit_range = 4          # Randomly added value for critical hits.
 # A base value of 8 and a range of 4 will result in gains from 8 to 12.
 
-"""
-UPGRADES:
-0: click power
-1: critical hit
-"""
-upgrades_list = [0, 0]
+### UPGRADES
+upgrades_list = [
+    0, # click power
+    0, # critical hit
+    ]
 
 ### Functions
 def decode_save_data():
