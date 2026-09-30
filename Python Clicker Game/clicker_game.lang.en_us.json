@@ -25,9 +25,9 @@
     "menu.upgrade.input_instructions": "Enter the number of an upgrade to buy it. Cost increases per upgrade count. Leave empty to leave this menu.\n>>> ",
 
     "menu.upgrade.upgrades.0": "{id}: Click power",
-    "menu.upgrade.upgrades_info.0": "  \"Increases the number of clicks you get per click, one at a time.\"",
+    "menu.upgrade.upgrades_info.0": "   \"Increases the number of clicks you get per click, one at a time.\"",
     "menu.upgrade.upgrades.1": "{id}: Critical hit chance",
-    "menu.upgrade.upgrades_info.1": "  \"Increases the chance of getting a critical hit, one percent at a time.\"",
+    "menu.upgrade.upgrades_info.1": "   \"Increases the chance of getting a critical hit, one percent at a time.\"",
 
-    "menu.upgrade.upgrade_count": "  You currently have {count} of this upgrade."
+    "menu.upgrade.upgrade_count": "   You currently have {count} of this upgrade."
 }
