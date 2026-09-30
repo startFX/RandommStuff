@@ -74,7 +74,8 @@ def upgrade_menu():
         for i in range(2):
             print(l["menu.upgrade.upgrades." + str(i)].format(id = i+1))
             print(l["menu.upgrade.upgrades_info." + str(i)])
-            print(l["menu.upgrade.upgrade_count"].format(count = upgrades_list[i]) + "\n") # \n for nicer looks
+            print(l["menu.upgrade.upgrade_count"].format(count = upgrades_list[i]))
+        print("") # Separate menu and input
         user_input = input(l["menu.upgrade.input_instructions"])
 
         if user_input == "":
