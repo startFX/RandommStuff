@@ -1,5 +1,6 @@
 from base64 import *
 from random import *
+from simple_b64 import *
 from pathlib import Path
 import json
 
@@ -39,14 +40,6 @@ UPGRADES:
 upgrades_list = [0, 0]
 
 ### Functions
-def b64_encoded_str(s):
-    tmp = b64encode(s.encode("utf-8"))
-    return tmp.decode("utf-8")
-
-def b64_decoded_str(s):
-    tmp = b64decode(s.encode("utf-8"))
-    return tmp.decode("utf-8")
-
 def decode_save_data():
     with open((FILE_NAME + SAVE_FILE_PREFIX), "r", encoding = "utf-8") as save_data_file:
         s = save_data_file.read()
