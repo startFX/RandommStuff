@@ -31,8 +31,12 @@ critical_hit_base = 8           # Base value for critical hit.
 critical_hit_range = 4          # Randomly added value for critical hits.
 # A base value of 8 and a range of 4 will result in gains from 8 to 12.
 
-# Upgrades
-u_click_power = 0
+"""
+UPGRADES:
+0: click power
+1: critical hit
+"""
+upgrades_list = [0, 0]
 
 ### Functions
 def b64_encoded_str(s):
@@ -67,6 +71,18 @@ def save_data_file_exists():
         return True
     else:
         return False
+
+def upgrade_menu():
+    while True:
+        print(l["menu.upgrade.title"])
+        for i in range(2):
+            print(l["menu.upgrade.upgrades." + str(i)].format(id = i+1))
+            print(l["menu.upgrade.upgrades_info." + str(i)])
+            print(l["menu.upgrade.upgrade_count"].format(count = upgrades_list[i]) + "\n") # \n for nicer looks
+        user_input = input(l["menu.upgrade.input_instructions"])
+
+        if user_input == "":
+            break
 
 ### Main
 print(MENU)
@@ -125,4 +141,4 @@ while True:
             print(l["status.load.save_data_not_found"].format(file = (FILE_NAME + SAVE_FILE_PREFIX)))
 
     elif user.lower() == "u": # Upgrade menu
-        pass
+        upgrade_menu()

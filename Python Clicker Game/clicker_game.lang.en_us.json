@@ -19,5 +19,15 @@
     "status.load.save_data_found": "Save data file {file} found!",
     "status.load.loading": "Loading save data file...",
     "status.load.loaded": "Loaded save data from {file}.",
-    "status.load.save_data_not_found": "Save data file {file} does not exist or is not in parent folder.\nEnter [S] to save while in-game."
+    "status.load.save_data_not_found": "Save data file {file} does not exist or is not in parent folder.\nEnter [S] to save while in-game.",
+
+    "menu.upgrade.title": "UPGRADE MENU",
+    "menu.upgrade.input_instructions": "Enter the number of an upgrade to buy it. Cost increases per upgrade count. Leave empty to leave this menu.\n>>> ",
+
+    "menu.upgrade.upgrades.0": "{id}: Click power",
+    "menu.upgrade.upgrades_info.0": "  \"Increases the number of clicks you get per click, one at a time.\"",
+    "menu.upgrade.upgrades.1": "{id}: Critical hit chance",
+    "menu.upgrade.upgrades_info.1": "  \"Increases the chance of getting a critical hit, one percent at a time.\"",
+
+    "menu.upgrade.upgrade_count": "  You currently have {count} of this upgrade."
 }
