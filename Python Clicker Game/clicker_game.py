@@ -50,24 +50,37 @@ upgrades_max_level = [
 
 ### Functions
 def decode_save_data():
+    """
+    Decodes save data, decoding it from Base64 and splitting it into a list, which it returns.
+    """
     with open((FILE_NAME + SAVE_FILE_PREFIX), "r", encoding = "utf-8") as save_data_file:
         s = save_data_file.read()
     splut = b64_decoded_str(s).split(DATA_SEPARATOR)
     return splut
 
 def load_decoded_save_data(d):
+    """
+    Assigns decoded save data values to their respective variables.
+    :param d: List containing decoded save data.
+    """
     global clicks, critical_hits, click_power
     clicks = int(d[0])
     critical_hits = int(d[1])
     click_power = int(d[2])
 
 def save_data():
+    """
+    Constructs save data string and writes it to the save data text file.
+    """
     to_save = str(clicks) + DATA_SEPARATOR + str(critical_hits) + DATA_SEPARATOR + str(click_power)
     to_save = b64_encoded_str(to_save)
     with open((FILE_NAME + SAVE_FILE_PREFIX), "w", encoding = "utf-8") as save_data_file:
         save_data_file.write(to_save)
 
 def save_data_file_exists():
+    """
+    Checks if the save data text file exists. Returns True or False.
+    """
     file_path=Path(__file__).parent/(FILE_NAME + SAVE_FILE_PREFIX)
     if file_path.is_file():
         return True
@@ -75,9 +88,17 @@ def save_data_file_exists():
         return False
 
 def calc_increased_upgrade_price(base_price, level):
+    """
+    Calculates increased upgrade prices based on the upgrade's base price and level, as well as the global upgrade price multiplier.
+    :param base_price: The base price of the upgrade to calculate from.
+    :param level: The level of the upgrade of which the price is calculated.
+    """
     return round(base_price * (UPGRADE_PRICE_MULTIPLIER ** level))
 
 def upgrade_menu():
+    """
+    Upgrade menu code.
+    """
     while True:
         print(l["menu.upgrade.title"])
         for i in range(2):
