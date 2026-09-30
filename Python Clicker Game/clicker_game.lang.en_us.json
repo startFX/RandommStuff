@@ -8,13 +8,14 @@
     "interface.critical_hit_count.singular": "You have {count} critical hit.",
     "interface.critical_hit_count.plural": "You have {count} critical hits.",
 
-    "status.critical_hit.singular": "CRITICAL HIT! +{count} click!",
-    "status.critical_hit.plural": "CRITICAL HIT! +{count} clicks!",
     "status.click.singular": "+{count} click!",
     "status.click.plural": "+{count} clicks!",
+    "status.critical_hit.singular": "CRITICAL HIT! +{count} click!",
+    "status.critical_hit.plural": "CRITICAL HIT! +{count} clicks!",
 
     "status.save.data_saved": "Data saved to {file}.",
     "status.save.data_saved_new_file": "New save file created. Data saved to {file}.",
+
     "status.load.save_data_found": "Save data file {file} found!",
     "status.load.loading": "Loading save data file...",
     "status.load.loaded": "Loaded save data from {file}.",
