@@ -37,6 +37,10 @@ upgrades_list = [
     0, # click power
     0, # critical hit
     ]
+upgrades_base_price = [
+    50,
+    250,
+]
 
 ### Functions
 def decode_save_data():
