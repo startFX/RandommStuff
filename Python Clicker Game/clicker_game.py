@@ -18,6 +18,8 @@ FILE_NAME = "clicker_game"
 SAVE_FILE_PREFIX = ".save.txt"
 CONFIG_FILE_PREFIX = ".config.txt"
 
+UPGRADE_PRICE_MULTIPLIER = 1.175
+
 ### Variables
 
 ## Save data values
@@ -33,13 +35,17 @@ critical_hit_range = 4          # Randomly added value for critical hits.
 # A base value of 8 and a range of 4 will result in gains from 8 to 12.
 
 ### UPGRADES
-upgrades_list = [
+upgrades_level = [
     0, # click power
     0, # critical hit
     ]
 upgrades_base_price = [
     50,
     250,
+]
+upgrades_max_level = [
+    -1,
+    94,
 ]
 
 ### Functions
@@ -68,13 +74,20 @@ def save_data_file_exists():
     else:
         return False
 
+def calc_increased_upgrade_price(base_price, level):
+    return round(base_price * (UPGRADE_PRICE_MULTIPLIER ** level))
+
 def upgrade_menu():
     while True:
         print(l["menu.upgrade.title"])
         for i in range(2):
-            print(l["menu.upgrade.upgrades." + str(i)].format(id = i+1))
-            print(l["menu.upgrade.upgrades_info." + str(i)])
-            print(l["menu.upgrade.upgrade_count"].format(count = upgrades_list[i]))
+            print(l["menu.upgrade.upgrades." + str(i)].format(id = i+1) + " - " + l["menu.upgrade.upgrades_info." + str(i)])
+            if upgrades_max_level[i] < 0:
+                print(l["menu.upgrade.max_level_none.combined"].format(count = upgrades_level[i]))
+            else:
+                print(l["menu.upgrade.max_level.combined"].format(max = upgrades_max_level[i], count = upgrades_level[i]))
+            price = calc_increased_upgrade_price(upgrades_base_price[i], upgrades_level[i])
+            print(l["menu.upgrade.click_to_buy"].format(id = i+1, level =upgrades_level[i]+1, cost = price))
         print("") # Separate menu and input
         user_input = input(l["menu.upgrade.input_instructions"])
 
@@ -83,7 +96,6 @@ def upgrade_menu():
 
 ### Main
 print(MENU)
-print("")
 while True:
     print("")
     if clicks == 1:
