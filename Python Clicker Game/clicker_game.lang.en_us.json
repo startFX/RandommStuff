@@ -1,7 +1,10 @@
 {
-    "menu.intro": "\nCLICKER GAME\nWelcome to a simple clicking game!\nLeave empty to click.\nEnter [H] for help on available commands. This is highly recommended if this is your first time playing.",
-    "menu.input_instructions": "Leave empty to click.\nEnter [H] for help on available commands.\n>>> ",
-    "menu.help": "Keybinds:\n- [H]: view this help menu\n- [S]: save game\n- [L]: load game from save file\n- [U]: view upgrade menu",
+    "menu.intro": "\nCLICKER GAME\nWelcome to a simple clicking game!\nLeave empty to click.\nEnter [H] for help on available commands. This is highly recommended if this is your first time playing.\nSAVING IS NOT AUTOMATIC!! If you quit with [Q] without saving, progress WILL be lost!",
+    "menu.input_instructions": "Leave empty to click.\nEnter [H] for help on available commands or [Q] to quit.\n>>> ",
+    "menu.help": "Keybinds:\n- [H]: view this help menu\n- [S]: save game\n- [L]: load game from save file\n- [Q]: quit game (does not save automatically)\n- [U]: view upgrade menu\n- [I]: view extra information for advanced players",
+    "menu.extra_info": "Extra information (can be useful for more advanced players):\n- by default, you have a 5% chance of getting a critical hit every time you click.",
+
+    "menu.quit_message": "See you next time!",
 
     "interface.click_count.singular": "You have {count} click.",
     "interface.click_count.plural": "You have {count} clicks.",
@@ -25,11 +28,22 @@
     "menu.upgrade.input_instructions": "Enter the number of an upgrade to buy it. Cost increases per upgrade level. Leave empty to leave this menu.\n>>> ",
 
     "menu.upgrade.upgrades.0": "{id}: Click power",
+    "menu.upgrade.upgrades_name.0": "Click power",
     "menu.upgrade.upgrades_info.0": "\"Increases the number of clicks you get per click, one at a time.\"",
+    "menu.upgrade.effect.0": "providing +{n} extra clicks per click.",
     "menu.upgrade.upgrades.1": "{id}: Critical hit chance",
+    "menu.upgrade.upgrades_name.1": "Critical hit chance",
     "menu.upgrade.upgrades_info.1": "\"Increases the chance of getting a critical hit, one percent at a time.\"",
+    "menu.upgrade.effect.1": "providing an extra +{n}% chance of getting a critical hit.",
 
-    "menu.upgrade.max_level.combined": "   This upgrade maxes out at level {max}. It is currently at level {count}.",
-    "menu.upgrade.max_level_none.combined": "   This upgrade does not have a max level. It is currently at level {count}.",
-    "menu.upgrade.click_to_buy": "   Enter [{id}] to buy level {level} of this upgrade for {cost} clicks."
+    "menu.upgrade.max_level.combined": "   This upgrade maxes out at level {max}. It is currently at level {count}, ",
+    "menu.upgrade.max_level_none.combined": "   This upgrade does not have a max level. It is currently at level {count}, ",
+    "menu.upgrade.click_to_buy": "   Enter [{id}] to buy level {level} of this upgrade for {cost} clicks.",
+    "menu.upgrade.max_level_reached": "   This upgrade is already at its max level. No need to buy more of it!",
+
+    "menu.upgrade.status.none": "No purchases made yet.",
+    "menu.upgrade.status.click_count": "You currently have {click} clicks.",
+    "menu.upgrade.status.max_level_reached": "Upgrade {upgrade} is already at its maximum level!",
+    "menu.upgrade.status.level_bought": "Level {level} of upgrade {upgrade} bought for {cost} clicks!",
+    "menu.upgrade.status.not_enough_clicks": "You do not have enough clicks to buy this upgrade. You need {difference} more!"
 }

@@ -8,11 +8,6 @@ with open("clicker_game.lang." + LANGUAGE + ".json", "r", encoding = "utf-8") as
     l = json.load(file)
 
 ### CONSTANTS
-MENU = l["menu.intro"]
-INSTRUCTIONS = l["menu.input_instructions"]
-HELP = l["menu.help"]
-
-DATA_SEPARATOR = "|"
 FILE_NAME = "clicker_game"
 SAVE_FILE_SUFFIX =".save.txt"
 CONFIG_FILE_SUFFIX =".config.txt"
@@ -28,9 +23,11 @@ critical_hits = 0
 
 # Gameplay
 click_power = 1
+base_click_power = 1
 critical_hit_chance = 0.05
-critical_hit_base = 8           # Base value for critical hit.
-critical_hit_range = 4          # Randomly added value for critical hits.
+base_critical_hit_chance = 0.05
+critical_hit_base = 8           # Base value for critical hit click bonus.
+critical_hit_range = 4          # Randomly added value for critical hit click bonus.
 # A base value of 8 and a range of 4 will result in gains from 8 to 12.
 
 ### UPGRADES
@@ -44,7 +41,7 @@ upgrades_base_price = [
 ]
 upgrades_max_level = [
     -1,
-    94,
+    24,
 ]
 
 ### Functions
@@ -92,36 +89,67 @@ def save_data_file_exists():
     else:
         return False
 
-def calc_increased_upgrade_price(base_price, level):
+def calc_increased_upgrade_price(base_price, level, multiplier):
     """
     Calculates increased upgrade prices based on the upgrade's base price and level, as well as the global upgrade price multiplier.
     :param base_price: The base price of the upgrade to calculate from.
     :param level: The level of the upgrade of which the price is calculated.
     """
-    return round(base_price * (UPGRADE_PRICE_MULTIPLIER ** level))
+    return round(base_price * (multiplier ** level))
 
 def upgrade_menu():
     """
     Upgrade menu code.
     """
+    global upgrades_level # We need to be able to change this list's contents within this function
+    global clicks
+    status = l["menu.upgrade.status.none"]
     while True:
-        print(l["menu.upgrade.title"])
-        for i in range(2):
-            print(l["menu.upgrade.upgrades." + str(i)].format(id = i+1) + " - " + l["menu.upgrade.upgrades_info." + str(i)])
-            if upgrades_max_level[i] < 0:
-                print(l["menu.upgrade.max_level_none.combined"].format(count = upgrades_level[i]))
+        print(l["menu.upgrade.title"]) # "UPGRADE MENU"
+
+        for i in range(len(upgrades_base_price)): # Code uses upgrades base price list to determine how many upgrades are currently in the game
+            print(l["menu.upgrade.upgrades." + str(i)].format(id = i+1) + " - " + l["menu.upgrade.upgrades_info." + str(i)]) # Upgrade ID, name and info
+            if upgrades_max_level[i] < 0: # Upgrades max level display. Anything under 0 is marked as not having a limit (e.g. -1)
+                print(l["menu.upgrade.max_level_none.combined"].format(count = upgrades_level[i]) + l["menu.upgrade.effect." + str(i)].format(n = upgrades_level[i]))
             else:
-                print(l["menu.upgrade.max_level.combined"].format(max = upgrades_max_level[i], count = upgrades_level[i]))
-            price = calc_increased_upgrade_price(upgrades_base_price[i], upgrades_level[i])
-            print(l["menu.upgrade.click_to_buy"].format(id = i+1, level =upgrades_level[i]+1, cost = price))
-        print("") # Separate menu and input
+                print(l["menu.upgrade.max_level.combined"].format(max = upgrades_max_level[i], count = upgrades_level[i]) + l["menu.upgrade.effect." + str(i)].format(n = upgrades_level[i]))
+            price = calc_increased_upgrade_price(upgrades_base_price[i], upgrades_level[i], UPGRADE_PRICE_MULTIPLIER) # Calculate price based on formula
+            if upgrades_level[i] >= upgrades_max_level[i] >= 0:
+                print(l["menu.upgrade.max_level_reached"])
+            else:
+                print(l["menu.upgrade.click_to_buy"].format(id = i+1, level = upgrades_level[i]+1, cost = price)) # Enter [n] to buy level [x] for [count] clicks
+
+        print(""); print(status); print(l["menu.upgrade.status.click_count"].format(click = clicks)); print("")
         user_input = input(l["menu.upgrade.input_instructions"])
 
         if user_input == "":
-            break
+            break # Exit upgrade menu on lack of user input. It is mentioned in the input instruction that leaving the input empty leaves the menu
+        else:
+            if user_input in [str(i+1) for i in range(len(upgrades_base_price))]: # If user input is in accepted range of "upgrade-buying"
+                # If upgrades_base_price has a length of 2, it will check if str(input) is in [1, 2]
+                user_b = int(user_input) - 1 # If input is valid, make it into an integer for easier work
+                # Check if upgrade limit has been reached:
+                if upgrades_level[user_b] >= upgrades_max_level[user_b] >= 0: # If the level of the upgrade is equal to or higher than its max level
+                    status = l["menu.upgrade.status.max_level_reached"].format(upgrade = l["menu.upgrade.upgrades_name." + str(user_b)])
+                else:
+                    price = calc_increased_upgrade_price(upgrades_base_price[user_b], upgrades_level[user_b], UPGRADE_PRICE_MULTIPLIER)
+                    if clicks >= price:
+                        status = l["menu.upgrade.status.level_bought"].format(level = upgrades_level[user_b] + 1, upgrade = l["menu.upgrade.upgrades_name." + str(user_b)], cost = price)
+                        clicks -= price
+                        upgrades_level[user_b] += 1
+                    else:
+                        status = l["menu.upgrade.status.not_enough_clicks"].format(difference = price - clicks)
+
+def apply_upgrades():
+    """
+    Dynamically applies upgrades' effects on respective variables.
+    """
+    global click_power, critical_hit_chance
+    click_power = base_click_power + upgrades_level[0]
+    critical_hit_chance = base_critical_hit_chance + (0.01 * upgrades_level[1])
 
 ### Main
-print(MENU)
+print(l["menu.intro"])
 while True:
     print("")
     if clicks == 1:
@@ -133,7 +161,7 @@ while True:
     else:
         print(l["interface.critical_hit_count.plural"].format(count = critical_hits))
 
-    user = input(INSTRUCTIONS)
+    user = input(l["menu.input_instructions"])
     print("\n\n") # Leave space between turns
 
     if user == "":
@@ -152,9 +180,6 @@ while True:
             else:
                 print(l["status.click.plural"].format(count = click_power))
 
-    elif user.lower() == "h":
-        print(HELP)
-
     elif user.lower() == "s": # Saving game data to save file
         if save_data_file_exists():
             save_game()
@@ -170,6 +195,7 @@ while True:
             temp = load_game()
             load_save_data(temp)
             print(l["status.load.loaded"].format(file = (FILE_NAME+SAVE_FILE_SUFFIX)))
+            apply_upgrades()
 
         # If it doesn't exist
         else:
@@ -177,3 +203,14 @@ while True:
 
     elif user.lower() == "u": # Upgrade menu
         upgrade_menu()
+        apply_upgrades()
+
+    elif user.lower() == "h":
+        print(l["menu.help"])
+
+    elif user.lower() == "i":
+        print(l["menu.extra_info"])
+
+    elif user.lower() == "q":
+        print(l["menu.quit_message"])
+        break
