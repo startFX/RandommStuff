@@ -1,7 +1,6 @@
 import json
 import base64
 from random import *
-from simple_b64 import *
 from pathlib import Path
 
 LANGUAGE = "en_us"
