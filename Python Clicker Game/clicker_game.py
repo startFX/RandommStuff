@@ -1,8 +1,8 @@
-from base64 import *
+import json
+import base64
 from random import *
 from simple_b64 import *
 from pathlib import Path
-import json
 
 LANGUAGE = "en_us"
 with open("clicker_game.lang." + LANGUAGE + ".json", "r", encoding = "utf-8") as file:
@@ -15,8 +15,8 @@ HELP = l["menu.help"]
 
 DATA_SEPARATOR = "|"
 FILE_NAME = "clicker_game"
-SAVE_FILE_PREFIX = ".save.txt"
-CONFIG_FILE_PREFIX = ".config.txt"
+SAVE_FILE_SUFFIX =".save.txt"
+CONFIG_FILE_SUFFIX =".config.txt"
 
 UPGRADE_PRICE_MULTIPLIER = 1.175
 
@@ -49,39 +49,45 @@ upgrades_max_level = [
 ]
 
 ### Functions
-def decode_save_data():
-    """
-    Decodes save data, decoding it from Base64 and splitting it into a list, which it returns.
-    """
-    with open((FILE_NAME + SAVE_FILE_PREFIX), "r", encoding = "utf-8") as save_data_file:
-        s = save_data_file.read()
-    splut = b64_decoded_str(s).split(DATA_SEPARATOR)
-    return splut
+def load_game():
+    with open((FILE_NAME + SAVE_FILE_SUFFIX), "r", encoding = "utf-8") as file:
+        encoded_data = file.read()
 
-def load_decoded_save_data(d):
-    """
-    Assigns decoded save data values to their respective variables.
-    :param d: List containing decoded save data.
-    """
-    global clicks, critical_hits, click_power
-    clicks = int(d[0])
-    critical_hits = int(d[1])
-    click_power = int(d[2])
+    decoded_data = base64.b64decode(encoded_data).decode("utf-8")
 
-def save_data():
-    """
-    Constructs save data string and writes it to the save data text file.
-    """
-    to_save = str(clicks) + DATA_SEPARATOR + str(critical_hits) + DATA_SEPARATOR + str(click_power)
-    to_save = b64_encoded_str(to_save)
-    with open((FILE_NAME + SAVE_FILE_PREFIX), "w", encoding = "utf-8") as save_data_file:
-        save_data_file.write(to_save)
+    return decoded_data
+
+def load_save_data(decoded_data):
+    global clicks, critical_hits, upgrades_level
+
+    save_data = json.loads(decoded_data)
+
+    clicks = save_data["clicks"]
+    critical_hits = save_data["critical_hits"]
+    upgrades_level = save_data["upgrades_level"]
+
+def save_game():
+    save_data = {
+        "misc.message": "Good job on decoding the save file! Don't use this knowledge to cheat, though. That wouldn't be very cool.",
+        "clicks": clicks,
+        "critical_hits": critical_hits,
+        "upgrades_level": upgrades_level,
+    }
+
+    json_string = json.dumps(save_data, indent = 4)
+
+    encoded = base64.b64encode(
+        json_string.encode("utf-8")
+    ).decode("ascii")
+
+    with open((FILE_NAME+SAVE_FILE_SUFFIX), "w", encoding ="utf-8") as file:
+        file.write(encoded)
 
 def save_data_file_exists():
     """
     Checks if the save data text file exists. Returns True or False.
     """
-    file_path=Path(__file__).parent/(FILE_NAME + SAVE_FILE_PREFIX)
+    file_path=Path(__file__).parent/(FILE_NAME+SAVE_FILE_SUFFIX)
     if file_path.is_file():
         return True
     else:
@@ -124,7 +130,7 @@ while True:
     else:
         print(l["interface.click_count.plural"].format(count = clicks))
     if critical_hits == 1:
-        print(l["interface.critical_hit_count.singular"].format(count = clicks))
+        print(l["interface.critical_hit_count.singular"].format(count = critical_hits))
     else:
         print(l["interface.critical_hit_count.plural"].format(count = critical_hits))
 
@@ -152,23 +158,23 @@ while True:
 
     elif user.lower() == "s": # Saving game data to save file
         if save_data_file_exists():
-            save_data()
-            print(l["status.save.data_saved"].format(file = (FILE_NAME + SAVE_FILE_PREFIX)))
+            save_game()
+            print(l["status.save.data_saved"].format(file = (FILE_NAME+SAVE_FILE_SUFFIX)))
         else:
-            save_data()
-            print(l["status.save.data_saved_new_file"].format(file = (FILE_NAME + SAVE_FILE_PREFIX)))
+            save_game()
+            print(l["status.save.data_saved_new_file"].format(file = (FILE_NAME+SAVE_FILE_SUFFIX)))
 
     elif user.lower() == "l": # Loading save data
         if save_data_file_exists():
-            print(l["status.load.save_data_found"].format(file = (FILE_NAME + SAVE_FILE_PREFIX)))
+            print(l["status.load.save_data_found"].format(file = (FILE_NAME+SAVE_FILE_SUFFIX)))
             print(l["status.load.loading"])
-            temp = decode_save_data()
-            load_decoded_save_data(temp)
-            print(l["status.load.loaded"].format(file = (FILE_NAME + SAVE_FILE_PREFIX)))
+            temp = load_game()
+            load_save_data(temp)
+            print(l["status.load.loaded"].format(file = (FILE_NAME+SAVE_FILE_SUFFIX)))
 
         # If it doesn't exist
         else:
-            print(l["status.load.save_data_not_found"].format(file = (FILE_NAME + SAVE_FILE_PREFIX)))
+            print(l["status.load.save_data_not_found"].format(file = (FILE_NAME+SAVE_FILE_SUFFIX)))
 
     elif user.lower() == "u": # Upgrade menu
         upgrade_menu()
