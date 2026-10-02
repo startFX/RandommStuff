@@ -109,11 +109,11 @@ def upgrade_menu():
         print(l["menu.upgrade.title"]) # "UPGRADE MENU"
 
         for i in range(len(upgrades_base_price)): # Code uses upgrades base price list to determine how many upgrades are currently in the game
-            print(l["menu.upgrade.upgrades." + str(i)].format(id = i+1) + " - " + l["menu.upgrade.upgrades_info." + str(i)]) # Upgrade ID, name and info
+            print(l["menu.upgrade.info"][str(i)]["name_id"].format(id = i+1) + " - " + l["menu.upgrade.info"][str(i)]["flavor"]) # Upgrade ID, name and info
             if upgrades_max_level[i] < 0: # Upgrades max level display. Anything under 0 is marked as not having a limit (e.g. -1)
-                print(l["menu.upgrade.max_level_none.combined"].format(count = upgrades_level[i]) + l["menu.upgrade.effect." + str(i)].format(n = upgrades_level[i]))
+                print(l["menu.upgrade.max_level_none.combined"].format(count = upgrades_level[i]) + l["menu.upgrade.info"][str(i)]["effect"].format(n = upgrades_level[i]))
             else:
-                print(l["menu.upgrade.max_level.combined"].format(max = upgrades_max_level[i], count = upgrades_level[i]) + l["menu.upgrade.effect." + str(i)].format(n = upgrades_level[i]))
+                print(l["menu.upgrade.max_level.combined"].format(max = upgrades_max_level[i], count = upgrades_level[i]) + l["menu.upgrade.info"][str(i)]["effect"].format(n = upgrades_level[i]))
             price = calc_increased_upgrade_price(upgrades_base_price[i], upgrades_level[i], UPGRADE_PRICE_MULTIPLIER) # Calculate price based on formula
             if upgrades_level[i] >= upgrades_max_level[i] >= 0:
                 print(l["menu.upgrade.max_level_reached"])
@@ -131,11 +131,11 @@ def upgrade_menu():
                 user_b = int(user_input) - 1 # If input is valid, make it into an integer for easier work
                 # Check if upgrade limit has been reached:
                 if upgrades_level[user_b] >= upgrades_max_level[user_b] >= 0: # If the level of the upgrade is equal to or higher than its max level
-                    status = l["menu.upgrade.status.max_level_reached"].format(upgrade = l["menu.upgrade.upgrades_name." + str(user_b)])
+                    status = l["menu.upgrade.status.max_level_reached"].format(upgrade = l["menu.upgrade.info"][str(user_b)]["name"])
                 else:
                     price = calc_increased_upgrade_price(upgrades_base_price[user_b], upgrades_level[user_b], UPGRADE_PRICE_MULTIPLIER)
                     if clicks >= price:
-                        status = l["menu.upgrade.status.level_bought"].format(level = upgrades_level[user_b] + 1, upgrade = l["menu.upgrade.upgrades_name." + str(user_b)], cost = price)
+                        status = l["menu.upgrade.status.level_bought"].format(level = upgrades_level[user_b] + 1, upgrade = l["menu.upgrade.info"][str(user_b)]["name"], cost = price)
                         clicks -= price
                         upgrades_level[user_b] += 1
                     else:
