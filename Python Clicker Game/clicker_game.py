@@ -45,7 +45,7 @@ upgrades_base_price = [
 ]
 upgrades_max_level = [
     -1,
-    19,
+    20,
     38,
 ]
 
