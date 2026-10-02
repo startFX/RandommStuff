@@ -42,14 +42,20 @@
         "0": {
             "name": "Click power",
             "name_id": "{id}: Click power",
-            "flavor": "\"Increases the number of clicks you get per click, one at a time.\"",
+            "flavor": "\"Increases the number of clicks you get per click.\"",
             "effect": "providing +{n} extra clicks per click."
         },
         "1": {
             "name": "Critical hit chance",
             "name_id": "{id}: Critical hit chance",
-            "flavor": "\"Increases the chance of getting a critical hit, one percent at a time.\"",
+            "flavor": "\"Increases the chance of getting a critical hit.\"",
             "effect": "providing an extra +{n}% chance of getting a critical hit."
+        },
+        "2": {
+            "name": "Critical hit bonus",
+            "name_id": "{id}: Critical hit bonus",
+            "flavor": "\"Increases the amount of clicks you get from critical hits.\"",
+            "effect": "providing an extra +{n} clicks per critical hit."
         }
     }
 }

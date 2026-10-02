@@ -28,20 +28,25 @@ critical_hit_chance = 5
 base_critical_hit_chance = 5
 critical_hit_base = 8           # Base value for critical hit click bonus.
 critical_hit_range = 4          # Randomly added value for critical hit click bonus.
+base_critical_hit_base = 8
+base_critical_hit_range = 4
 # A base value of 8 and a range of 4 will result in gains from 8 to 12.
 
 ### UPGRADES
 upgrades_level = [
     0, # click power
     0, # critical hit
+    0, # critical hit bonus
     ]
 upgrades_base_price = [
     50,
     250,
+    350,
 ]
 upgrades_max_level = [
     -1,
     19,
+    38,
 ]
 
 ### Functions
@@ -145,9 +150,10 @@ def apply_upgrades():
     """
     Dynamically applies upgrades' effects on respective variables.
     """
-    global click_power, critical_hit_chance
+    global click_power, critical_hit_chance, critical_hit_base
     click_power = base_click_power + upgrades_level[0]
     critical_hit_chance = base_critical_hit_chance + upgrades_level[1]
+    critical_hit_base = base_critical_hit_base + upgrades_level[2]
 
 ### Main
 print(l["menu.intro"])
