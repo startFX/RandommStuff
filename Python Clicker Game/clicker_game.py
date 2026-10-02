@@ -94,8 +94,9 @@ def calc_increased_upgrade_price(base_price, level, multiplier):
     Calculates increased upgrade prices based on the upgrade's base price and level, as well as the global upgrade price multiplier.
     :param base_price: The base price of the upgrade to calculate from.
     :param level: The level of the upgrade of which the price is calculated.
+    :param multiplier: The multiplier to use when calculating increased upgrade prices.
     """
-    return round(base_price * (multiplier ** level))
+    return round(base_price * (multiplier ** (level ** 0.925)))
 
 def upgrade_menu():
     """
