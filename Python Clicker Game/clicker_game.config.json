@@ -1,0 +1,14 @@
+{
+    "config.default": {
+        "0": {
+            "type": "bool",
+            "value": "False"
+        }
+    },
+    "config.user": {
+        "0": {
+            "type": "bool",
+            "value": "False"
+        }
+    }
+}

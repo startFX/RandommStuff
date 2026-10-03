@@ -1,20 +1,29 @@
+### IMPORTS
 import json
 import base64
+import sys
+import copy
 from random import *
 from pathlib import Path
-
-LANGUAGE = "en_us"
-with open("clicker_game.lang." + LANGUAGE + ".json", "r", encoding = "utf-8") as file:
-    l = json.load(file)
 
 ### CONSTANTS
 FILE_NAME = "clicker_game"
 SAVE_FILE_SUFFIX =".save.txt"
-CONFIG_FILE_SUFFIX =".config.txt"
+CONFIG_FILE_SUFFIX =".config.json"
 
 UPGRADE_PRICE_MULTIPLIER = 1.175
 
-### Variables
+### DATA LOADING
+# lang file JSON loading
+LANGUAGE = "en_us"
+with open(FILE_NAME + ".lang." + LANGUAGE + ".json", "r", encoding = "utf-8") as file:
+    l = json.load(file)
+
+# config file JSON loading
+with open(FILE_NAME + CONFIG_FILE_SUFFIX, "r", encoding = "utf-8") as file:
+    c = json.load(file)
+
+### VARIABLES
 
 ## Save data values
 # Statistics
@@ -52,7 +61,7 @@ upgrades_max_level = [
     38,
 ]
 
-### Functions
+### FUNCTIONS
 def load_game():
     with open((FILE_NAME + SAVE_FILE_SUFFIX), "r", encoding = "utf-8") as file:
         encoded_data = file.read()
@@ -104,6 +113,20 @@ def save_game_with_status():
     else:
         save_game()
         print(l["status.save.data_saved_new_file"].format(file = (FILE_NAME + SAVE_FILE_SUFFIX)))
+
+def load_game_with_status(show_save_not_found_message = True):
+    if save_data_file_exists():
+        print(l["status.load.save_data_found"].format(file = (FILE_NAME + SAVE_FILE_SUFFIX)))
+        print(l["status.load.loading"])
+        tmp = load_game()
+        load_save_data(tmp)
+        print(l["status.load.loaded"].format(file = (FILE_NAME + SAVE_FILE_SUFFIX)))
+        apply_upgrades()
+
+    # If it doesn't exist
+    else:
+        if show_save_not_found_message:
+            print(l["status.load.save_data_not_found"].format(file = (FILE_NAME + SAVE_FILE_SUFFIX)))
 
 def calc_increased_upgrade_price(base_price, level, multiplier):
     """
@@ -166,7 +189,72 @@ def apply_upgrades():
     critical_hit_chance = base_critical_hit_chance + (upgrades_level[1] * 10)
     critical_hit_base = base_critical_hit_base + upgrades_level[2]
 
-### Main
+def config_menu():
+    """
+    Config menu code.
+    """
+    original_config = copy.deepcopy(c["config.user"])
+    print(l["menu.config.title"])
+
+    status = l["menu.config.status.none"]
+
+    while True:
+        for i in range(len(c["config.user"])):
+            print(l["menu.config.info"][str(i)]["name_id"].format(id = i+1))
+            print(l["menu.config.info"][str(i)]["flavor"])
+            print(l["menu.config.current_value"] + c["config.user"][str(i)]["value"] + l["menu.config.current_value.full_stop"])
+
+        print(""); print(status); print("")
+
+        user_input = input(l["menu.config.input_instructions"])
+
+        if user_input == "":
+            if c["config.user"] != original_config:
+                print("")
+                user_input_quit = input(l["menu.config.restart_notice"])
+                print("")
+                if user_input_quit == "":
+                    save_game_with_status()
+                    with open(FILE_NAME + CONFIG_FILE_SUFFIX, "w", encoding = "utf-8") as file:
+                        json.dump(c, file, indent = 4)
+                    sys.exit(0)
+                else:
+                    sys.exit(0)
+            else:
+                break
+
+        elif user_input.lower() == "d":
+            c["config.user"] = c["config.default"]
+            print("")
+            user_input_quit = input(l["menu.config.restart_notice"])
+            print("")
+            if user_input_quit == "":
+                save_game_with_status()
+                with open(FILE_NAME + CONFIG_FILE_SUFFIX, "w", encoding = "utf-8") as file:
+                    json.dump(c, file, indent = 4)
+                sys.exit(0)
+            else:
+                sys.exit(0)
+
+        elif user_input in [str(i+1) for i in range(len(c["config.user"]))]:
+            user_c = int(user_input) - 1
+            temp = c["config.user"][str(user_c)]["type"]
+            value_before = c["config.user"][str(user_c)]["value"]
+            if temp == "bool":
+                if c["config.user"][str(user_c)]["value"] == "False":
+                    c["config.user"][str(user_c)]["value"] = "True"
+                else:
+                    c["config.user"][str(user_c)]["value"] = "False"
+            status = l["menu.config.status.changed"].format(name = l["menu.config.info"][str(user_c)]["name"], before = value_before, after = c["config.user"][str(user_c)]["value"])
+
+
+### MAIN
+print("")
+## Config loading
+if c["config.user"]["0"]["value"] == "True":
+    load_game_with_status(False)
+
+## Main game code
 print(l["menu.intro"])
 while True:
     print("")
@@ -202,21 +290,14 @@ while True:
         save_game_with_status()
 
     elif user.lower() == "l": # Loading save data
-        if save_data_file_exists():
-            print(l["status.load.save_data_found"].format(file = (FILE_NAME+SAVE_FILE_SUFFIX)))
-            print(l["status.load.loading"])
-            temp = load_game()
-            load_save_data(temp)
-            print(l["status.load.loaded"].format(file = (FILE_NAME+SAVE_FILE_SUFFIX)))
-            apply_upgrades()
-
-        # If it doesn't exist
-        else:
-            print(l["status.load.save_data_not_found"].format(file = (FILE_NAME+SAVE_FILE_SUFFIX)))
+        load_game_with_status()
 
     elif user.lower() == "u": # Upgrade menu
         upgrade_menu()
         apply_upgrades()
+
+    elif user.lower() == "c":
+        config_menu()
 
     elif user.lower() == "h": # Show help
         print(l["menu.help"])

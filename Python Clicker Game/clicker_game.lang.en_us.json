@@ -1,11 +1,12 @@
 {
-    "menu.intro": "\nCLICKER GAME\nWelcome to a simple clicking game!\nLeave empty to click.\nEnter [H] for help on available commands. This is highly recommended if this is your first time playing.\nSAVING IS NOT AUTOMATIC!! If you quit with [Q] without saving, progress WILL be lost!",
+    "menu.intro": "\nCLICKER GAME\nWelcome to a simple clicking game!\nLeave empty to click.\nEnter [H] for help on available commands. This is highly recommended if this is your first time playing.\nSaving is not automatic, but entering [Q] saves the game before quitting. You can quit without saving with [-].",
     "menu.input_instructions": "Leave empty to click.\nEnter [H] for help on available commands or [Q] to quit.\n>>> ",
-    "menu.help": "Keybinds:\n- [H]: view this help menu\n- [S]: save game\n- [L]: load game from save file\n- [Q]: save & quit game\n- [-] quit game without saving\n- [U]: view upgrade menu\n- [I]: view extra information for advanced players",
+    "menu.help": "Keybinds:\n- [H]: view this help menu\n- [S]: save game\n- [L]: load game from save file\n- [C]: access config/settings menu\n- [Q]: save & quit game\n- [-]: quit game without saving\n- [U]: view upgrade menu\n- [I]: view extra information for advanced players",
     "menu.extra_info": "Extra information (can be useful for more advanced players):\n- by default, you have a 5% chance of getting a critical hit every time you click.",
 
     "menu.quit_message": "See you next time!",
     "menu.quit_message.no_save": "Quitting without saving.\nSee you next time!",
+
 
     "interface.click_count.singular": "You have {count} click.",
     "interface.click_count.plural": "You have {count} clicks.",
@@ -24,6 +25,7 @@
     "status.load.loading": "Loading save data file...",
     "status.load.loaded": "Loaded save data from {file}.",
     "status.load.save_data_not_found": "Save data file {file} does not exist or is not in parent folder.\nEnter [S] to save while in-game.",
+
 
     "menu.upgrade.title": "UPGRADE MENU",
     "menu.upgrade.input_instructions": "Enter the number of an upgrade to buy it. Cost increases per upgrade level. Leave empty to leave this menu.\n>>> ",
@@ -58,5 +60,24 @@
             "flavor": "\"Increases the amount of clicks you get from critical hits.\"",
             "effect": "providing an extra +{n} clicks per critical hit."
         }
-    }
+    },
+
+    "menu.config.title": "CONFIGURATION MENU",
+    "menu.config.input_instructions": "Enter the number of a config value to change it. Enter [D] to reset everything to defaults. Leave empty to leave this menu.\n>>> ",
+
+    "menu.config.status.none": "No changes made yet.",
+    "menu.config.status.changed": "Changed value of setting {name} from {before} to {after}.",
+
+    "menu.config.current_value": "   This setting is currently set to: ",
+    "menu.config.current_value.full_stop": ".",
+
+    "menu.config.info": {
+        "0": {
+            "name": "Load save file on startup",
+            "name_id": "{id}: Load save file on startup",
+            "flavor": "   Whether to load an existing save file on game startup."
+        }
+    },
+
+    "menu.config.restart_notice": "The user configuration has changed. A restart is needed to write changes into the config and apply it.\nLeave the input field empty if you wish to save and quit.\nEnter something to quit without saving.\nYou will have to start the game again yourself.\n>>> "
 }
