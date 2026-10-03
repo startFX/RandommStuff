@@ -36,6 +36,9 @@ base_click_power = 1
 
 critical_hit_chance = 50
 base_critical_hit_chance = 50
+# Careful! This might look like 50% to you, but the code sees it as 5%.
+# This is to allow for decimal percentages!
+# 42 -> 4.2%
 
 critical_hit_base = 8           # Base value for critical hit click bonus.
 critical_hit_range = 4          # Randomly added value for critical hit click bonus.
@@ -224,7 +227,7 @@ def config_menu():
                 break
 
         elif user_input.lower() == "d":
-            c["config.user"] = c["config.default"]
+            c["config.user"] = copy.deepcopy(c["config.default"])
             print("")
             user_input_quit = input(l["menu.config.restart_notice"])
             print("")
