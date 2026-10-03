@@ -80,12 +80,6 @@ def load_save_data(decoded_data):
     critical_hits = save_data["critical_hits"]
     upgrades_level = save_data["upgrades_level"]
 
-def save_data_file_exists():
-    """
-    Checks if the save data text file exists. Returns True or False.
-    """
-    return get_game_path(FILE_NAME + SAVE_FILE_SUFFIX).exists()
-
 def save_game():
     save_data = {
         "misc.message": "Good job on decoding the save file! Don't use this knowledge to cheat, though. That wouldn't be very cool.",
@@ -104,7 +98,7 @@ def save_game():
         file.write(encoded)
 
 def save_game_with_status():
-    if save_data_file_exists():
+    if file_exists(FILE_NAME + SAVE_FILE_SUFFIX):
         save_game()
         print(l["status.save.data_saved"].format(file = (FILE_NAME + SAVE_FILE_SUFFIX)))
     else:
@@ -112,7 +106,7 @@ def save_game_with_status():
         print(l["status.save.data_saved_new_file"].format(file = (FILE_NAME + SAVE_FILE_SUFFIX)))
 
 def load_game_with_status(show_save_not_found_message = True):
-    if save_data_file_exists():
+    if file_exists(FILE_NAME + SAVE_FILE_SUFFIX):
         print(l["status.load.save_data_found"].format(file = (FILE_NAME + SAVE_FILE_SUFFIX)))
         print(l["status.load.loading"])
         tmp = load_game()
