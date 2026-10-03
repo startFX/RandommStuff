@@ -54,6 +54,11 @@ upgrades_max_level = [
     20,
     38,
 ]
+### AVAILABLE LANGUAGES
+available_languages = [
+    "en_us",
+    "fr_fr",
+]
 
 ### FUNCTIONS
 def get_game_path(file_name):
@@ -236,18 +241,31 @@ def config_menu():
                     c["config.user"][str(user_c)]["value"] = "True"
                 else:
                     c["config.user"][str(user_c)]["value"] = "False"
+            elif temp == "str":
+                if user_c == 1: # If the setting is the language setting
+                    while True:
+                        print(l["menu.config.language.title"])
+                        for i in range(len(available_languages)):
+                            print(str(i+1) + ": " + available_languages[i] + " - " +l["menu.config.info"]["1"]["available_language_names"][available_languages[i]])
+                        print("")
+                        user_input = input(l["menu.config.language.input_instructions"])
+                        if user_input == "":
+                            break
+                        if user_input in [str(i+1) for i in range(len(available_languages))]:
+                            c["config.user"][str(user_c)]["value"] = available_languages[int(user_input) - 1]
+                            break
             status = l["menu.config.status.changed"].format(name = l["menu.config.info"][str(user_c)]["name"], before = value_before, after = c["config.user"][str(user_c)]["value"])
 
 
 ### DATA LOADING
 # lang file JSON loading
-LANGUAGE = "en_us"
-with open(get_game_path(FILE_NAME + LANG_FILE_SUFFIXES[0] + LANGUAGE + LANG_FILE_SUFFIXES[1]), "r", encoding = "utf-8") as file:
-    l = json.load(file)
-
 # config file JSON loading
 with open(get_game_path(FILE_NAME + CONFIG_FILE_SUFFIX), "r", encoding = "utf-8") as file:
     c = json.load(file)
+
+LANGUAGE = c["config.user"]["1"]["value"]
+with open(get_game_path(FILE_NAME + LANG_FILE_SUFFIXES[0] + LANGUAGE + LANG_FILE_SUFFIXES[1]), "r", encoding = "utf-8") as file:
+    l = json.load(file)
 
 
 ### MAIN
