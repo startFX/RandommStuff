@@ -24,8 +24,8 @@ critical_hits = 0
 # Gameplay
 click_power = 1
 base_click_power = 1
-critical_hit_chance = 5
-base_critical_hit_chance = 5
+critical_hit_chance = 50
+base_critical_hit_chance = 50
 critical_hit_base = 8           # Base value for critical hit click bonus.
 critical_hit_range = 4          # Randomly added value for critical hit click bonus.
 base_critical_hit_base = 8
@@ -152,7 +152,7 @@ def apply_upgrades():
     """
     global click_power, critical_hit_chance, critical_hit_base
     click_power = base_click_power + upgrades_level[0]
-    critical_hit_chance = base_critical_hit_chance + upgrades_level[1]
+    critical_hit_chance = base_critical_hit_chance + (upgrades_level[1] * 10)
     critical_hit_base = base_critical_hit_base + upgrades_level[2]
 
 ### Main
@@ -172,7 +172,7 @@ while True:
     print("\n\n") # Leave space between turns
 
     if user == "":
-        if random() * 100 < critical_hit_chance:
+        if random() * 1000 < critical_hit_chance:
             critical_hits += 1
             temp = randint(critical_hit_base, critical_hit_base + critical_hit_range)
             clicks += temp
