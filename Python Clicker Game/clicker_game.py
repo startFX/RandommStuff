@@ -70,6 +70,16 @@ def load_save_data(decoded_data):
     critical_hits = save_data["critical_hits"]
     upgrades_level = save_data["upgrades_level"]
 
+def save_data_file_exists():
+    """
+    Checks if the save data text file exists. Returns True or False.
+    """
+    file_path=Path(__file__).parent/(FILE_NAME+SAVE_FILE_SUFFIX)
+    if file_path.is_file():
+        return True
+    else:
+        return False
+
 def save_game():
     save_data = {
         "misc.message": "Good job on decoding the save file! Don't use this knowledge to cheat, though. That wouldn't be very cool.",
@@ -87,15 +97,13 @@ def save_game():
     with open((FILE_NAME+SAVE_FILE_SUFFIX), "w", encoding ="utf-8") as file:
         file.write(encoded)
 
-def save_data_file_exists():
-    """
-    Checks if the save data text file exists. Returns True or False.
-    """
-    file_path=Path(__file__).parent/(FILE_NAME+SAVE_FILE_SUFFIX)
-    if file_path.is_file():
-        return True
+def save_game_with_status():
+    if save_data_file_exists():
+        save_game()
+        print(l["status.save.data_saved"].format(file = (FILE_NAME + SAVE_FILE_SUFFIX)))
     else:
-        return False
+        save_game()
+        print(l["status.save.data_saved_new_file"].format(file = (FILE_NAME + SAVE_FILE_SUFFIX)))
 
 def calc_increased_upgrade_price(base_price, level, multiplier):
     """
@@ -191,12 +199,7 @@ while True:
                 print(l["status.click.plural"].format(count = click_power))
 
     elif user.lower() == "s": # Saving game data to save file
-        if save_data_file_exists():
-            save_game()
-            print(l["status.save.data_saved"].format(file = (FILE_NAME+SAVE_FILE_SUFFIX)))
-        else:
-            save_game()
-            print(l["status.save.data_saved_new_file"].format(file = (FILE_NAME+SAVE_FILE_SUFFIX)))
+        save_game_with_status()
 
     elif user.lower() == "l": # Loading save data
         if save_data_file_exists():
@@ -215,12 +218,17 @@ while True:
         upgrade_menu()
         apply_upgrades()
 
-    elif user.lower() == "h":
+    elif user.lower() == "h": # Show help
         print(l["menu.help"])
 
-    elif user.lower() == "i":
+    elif user.lower() == "i": # Show extra info
         print(l["menu.extra_info"])
 
-    elif user.lower() == "q":
+    elif user.lower() == "-": # Quit game without saving
+        print(l["menu.quit_message.no_save"])
+        break
+
+    elif user.lower() == "q": # Save and quit game
+        save_game_with_status()
         print(l["menu.quit_message"])
         break

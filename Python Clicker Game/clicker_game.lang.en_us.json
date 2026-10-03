@@ -1,10 +1,11 @@
 {
     "menu.intro": "\nCLICKER GAME\nWelcome to a simple clicking game!\nLeave empty to click.\nEnter [H] for help on available commands. This is highly recommended if this is your first time playing.\nSAVING IS NOT AUTOMATIC!! If you quit with [Q] without saving, progress WILL be lost!",
     "menu.input_instructions": "Leave empty to click.\nEnter [H] for help on available commands or [Q] to quit.\n>>> ",
-    "menu.help": "Keybinds:\n- [H]: view this help menu\n- [S]: save game\n- [L]: load game from save file\n- [Q]: quit game (does not save automatically)\n- [U]: view upgrade menu\n- [I]: view extra information for advanced players",
+    "menu.help": "Keybinds:\n- [H]: view this help menu\n- [S]: save game\n- [L]: load game from save file\n- [Q]: save & quit game\n- [-] quit game without saving\n- [U]: view upgrade menu\n- [I]: view extra information for advanced players",
     "menu.extra_info": "Extra information (can be useful for more advanced players):\n- by default, you have a 5% chance of getting a critical hit every time you click.",
 
     "menu.quit_message": "See you next time!",
+    "menu.quit_message.no_save": "Quitting without saving.\nSee you next time!",
 
     "interface.click_count.singular": "You have {count} click.",
     "interface.click_count.plural": "You have {count} clicks.",
