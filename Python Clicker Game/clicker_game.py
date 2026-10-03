@@ -24,10 +24,13 @@ critical_hits = 0
 # Gameplay
 click_power = 1
 base_click_power = 1
+
 critical_hit_chance = 50
 base_critical_hit_chance = 50
+
 critical_hit_base = 8           # Base value for critical hit click bonus.
 critical_hit_range = 4          # Randomly added value for critical hit click bonus.
+
 base_critical_hit_base = 8
 base_critical_hit_range = 4
 # A base value of 8 and a range of 4 will result in gains from 8 to 12.
