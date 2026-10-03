@@ -10,18 +10,9 @@ from pathlib import Path
 FILE_NAME = "clicker_game"
 SAVE_FILE_SUFFIX =".save.txt"
 CONFIG_FILE_SUFFIX =".config.json"
+LANG_FILE_SUFFIXES = (".lang.", ".json")
 
 UPGRADE_PRICE_MULTIPLIER = 1.175
-
-### DATA LOADING
-# lang file JSON loading
-LANGUAGE = "en_us"
-with open(FILE_NAME + ".lang." + LANGUAGE + ".json", "r", encoding = "utf-8") as file:
-    l = json.load(file)
-
-# config file JSON loading
-with open(FILE_NAME + CONFIG_FILE_SUFFIX, "r", encoding = "utf-8") as file:
-    c = json.load(file)
 
 ### VARIABLES
 
@@ -65,8 +56,15 @@ upgrades_max_level = [
 ]
 
 ### FUNCTIONS
+def get_game_path(file_name):
+    return Path(__file__).parent / file_name
+
+def file_exists(file_name):
+    return get_game_path(file_name).exists()
+
 def load_game():
-    with open((FILE_NAME + SAVE_FILE_SUFFIX), "r", encoding = "utf-8") as file:
+    path = get_game_path(FILE_NAME + SAVE_FILE_SUFFIX)
+    with open(path, "r", encoding = "utf-8") as file:
         encoded_data = file.read()
 
     decoded_data = base64.b64decode(encoded_data).decode("utf-8")
@@ -86,11 +84,7 @@ def save_data_file_exists():
     """
     Checks if the save data text file exists. Returns True or False.
     """
-    file_path=Path(__file__).parent/(FILE_NAME+SAVE_FILE_SUFFIX)
-    if file_path.is_file():
-        return True
-    else:
-        return False
+    return get_game_path(FILE_NAME + SAVE_FILE_SUFFIX).exists()
 
 def save_game():
     save_data = {
@@ -218,7 +212,7 @@ def config_menu():
                 print("")
                 if user_input_quit == "":
                     save_game_with_status()
-                    with open(FILE_NAME + CONFIG_FILE_SUFFIX, "w", encoding = "utf-8") as file:
+                    with open(get_game_path(FILE_NAME + CONFIG_FILE_SUFFIX), "w", encoding = "utf-8") as file:
                         json.dump(c, file, indent = 4)
                     sys.exit(0)
                 else:
@@ -233,7 +227,7 @@ def config_menu():
             print("")
             if user_input_quit == "":
                 save_game_with_status()
-                with open(FILE_NAME + CONFIG_FILE_SUFFIX, "w", encoding = "utf-8") as file:
+                with open(get_game_path(FILE_NAME + CONFIG_FILE_SUFFIX), "w", encoding = "utf-8") as file:
                     json.dump(c, file, indent = 4)
                 sys.exit(0)
             else:
@@ -249,6 +243,17 @@ def config_menu():
                 else:
                     c["config.user"][str(user_c)]["value"] = "False"
             status = l["menu.config.status.changed"].format(name = l["menu.config.info"][str(user_c)]["name"], before = value_before, after = c["config.user"][str(user_c)]["value"])
+
+
+### DATA LOADING
+# lang file JSON loading
+LANGUAGE = "en_us"
+with open(get_game_path(FILE_NAME + LANG_FILE_SUFFIXES[0] + LANGUAGE + LANG_FILE_SUFFIXES[1]), "r", encoding = "utf-8") as file:
+    l = json.load(file)
+
+# config file JSON loading
+with open(get_game_path(FILE_NAME + CONFIG_FILE_SUFFIX), "r", encoding = "utf-8") as file:
+    c = json.load(file)
 
 
 ### MAIN
