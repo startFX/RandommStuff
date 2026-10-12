@@ -156,7 +156,7 @@ if plot:
         plt.figure(figsize = (10, 12))
         for i, idx in enumerate(indices):
             plt.subplot(rows, cols, i + 1)
-            plt.imshow(x_test[idx].reshape(28, 28), cmap = 'gray_r', xmin = 0, vmax = 1)
+            plt.imshow(x_test[idx].reshape(28, 28), cmap = 'gray_r', vmin = 0, vmax = 1)
             t, p = y_test[idx], y_pred[idx]
             plt.title(f"T: {t} P: {p}" + ("" if t == p else "  X"),
                       fontsize = 9, fontweight = "normal" if t == p else "bold")
