@@ -114,6 +114,8 @@ history = model.fit(x_train, y_train,                   # Training images and la
 end_time = time.time()
 final_time = end_time - start_time
 print("Training took", final_time, "seconds")           # Timer
+minutes, remaining_seconds = divmod(final_time, 60)
+print(f"Or {int(minutes)} minutes and {remaining_seconds:g} seconds")
 
 print("") # Spacing :D
 ### EVALUATING MODEL
@@ -134,7 +136,7 @@ if plot:
     print(status_updates[7]) # Generating result figures
 
     def plot_learning_curves(history):
-        epochs = range(1, len(history.history['loss'] + 1))
+        epochs = range(1, len(history.history['loss']) + 1)
         plt.figure(figsize = (10, 4))
         plt.subplot(1, 2, 1)
         plt.plot(epochs, history.history['loss'], 'k-o', label = 'training')
