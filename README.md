@@ -1,7 +1,7 @@
 # RandommStuff
 A public repository where I put some of my stuff, like coding projects, tests and more.
 
-All Python code in this repository uses Python 3.14.8. You need to use this version, as projects like the MNIST CNN only work with that version of Python.
+All Python code in this repository uses Python 3.14.8. You need to use this version, or a version between 3.10 and 3.14, as projects like the MNIST CNN only work with that version of Python.
 
 # Information
 ## Python Clicker Game
