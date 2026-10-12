@@ -10,6 +10,16 @@ A Convolutional Neural Network (CNN) that takes images of handwritten numbers an
 
 Dataset is from https://www.kaggle.com/datasets/hichamachahboun/mnist-handwritten-digits.
 
+This file requires the following to run:
+
+- Python 3.10 - 3.14
+- `keras`
+- `scikit-learn`
+- `numpy`
+- `matplotlib`
+
+All of the above can be installed using `pip install`. However, the file also requires PyTorch to run, which is a little more complicated to install. See https://pytorch.org/get-started/locally/ for installation instructions.
+
 # Individual files
 ## simple_b64.py
 A module that simplifies Base64 encoding with providing two functions, one that encodes a str in Base64 and returns it as a str, another that decodes a str from Base64 and returns it as a str.
