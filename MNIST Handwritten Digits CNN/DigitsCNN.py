@@ -175,7 +175,7 @@ if plot:
         plt.figure(figsize = (10, 6))
         for i, idx in enumerate(selected):
             plt.subplot(rows, cols, i + 1)
-            plt.imshow(x_test[idx].reshape(28, 28), cmap = 'gray_r', vmin = 0, xmax = 1)
+            plt.imshow(x_test[idx].reshape(28, 28), cmap = 'gray_r', vmin = 0, vmax = 1)
             plt.title(f"True:{y_test[idx]} Pred:{y_pred[idx]}", fontsize = 9)
             plt.axis('off')
         plt.suptitle("Misclassified test images", fontsize = 14)
