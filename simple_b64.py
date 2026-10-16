@@ -1,10 +1,18 @@
-from base64 import *
+"""Functions to quickly encode to and decode from Base64.
+
+Uses str objects as inputs and outputs str objects directly, rather than going through byte conversion.
+The functions do that part for you.
+
+Imports base64's b64decode and b64encode.
+"""
+
+from base64 import b64decode, b64encode
 
 def b64_encoded_str(s):
   """
   Encodes a string in Base64 directly, without needing to use byte objects.
-  :param s: The string to encode
-  :return: Encoded string as str
+  Takes a str object as its only input.
+  Returns the encoded version of the string as a str object.
   """
   tmp = b64encode(s.encode("utf-8"))
   return tmp.decode("utf-8")
@@ -12,9 +20,9 @@ def b64_encoded_str(s):
 
 def b64_decoded_str(s):
   """
-    Decodes a string from Base64 directly, without needing to use byte objects.
-    :param s: The string to decode
-    :return: Decoded string as str
-    """
+  Decodes a string from Base64 directly, without needing to use byte objects.
+  Takes a str object as its only input.
+  Returns the decoded version of the string as a str object.
+  """
   tmp = b64decode(s.encode("utf-8"))
   return tmp.decode("utf-8")

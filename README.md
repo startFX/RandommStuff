@@ -1,7 +1,7 @@
 # RandommStuff
 A public repository where I put some of my stuff, like coding projects, tests and more.
 
-All Python code in this repository uses Python 3.14.8. You need to use this version, or a version between 3.10 and 3.14, as projects like the MNIST CNN only work with that version of Python.
+All Python code in this repository uses **Python 3.14.8**. You need to use this version - or a version between 3.10 and 3.14 - as projects like the MNIST CNN only work with that version of Python.
 
 # Information
 ## Python Clicker Game
@@ -19,11 +19,14 @@ This file requires the following to run:
 - `numpy`
 - `matplotlib`
 
-All modules above can be installed using `pip install`. However, the file also requires PyTorch to run, which is a little more complicated to install. See https://pytorch.org/get-started/locally/ for installation instructions.
+All modules above can be installed using `pip install`. However, the file also requires **PyTorch** to run, which is a little more complicated to install. To install it, see https://pytorch.org/get-started/locally/ for instructions.
 
 # Individual files
 ## simple_b64.py
-A module that simplifies Base64 encoding with providing two functions, one that encodes a str in Base64 and returns it as a str, another that decodes a str from Base64 and returns it as a str.
+Functions to quickly encode to and decode from Base64. Uses str objects as inputs and outputs str objects directly, rather than going through byte conversion. **Use Python's built-in `help()` function for more info.**
+
+## weight_mean.py
+Utility functions for calculating weighted averages. **Use Python's built-in `help()` function for more info.**
 
 ## testing.py
 Random stuff for testing.

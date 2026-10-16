@@ -161,7 +161,7 @@ if plot:
             plt.title(f"T: {t} P: {p}" + ("" if t == p else "  X"),
                       fontsize = 9, fontweight = "normal" if t == p else "bold")
             plt.axis('off')
-        plt.suptitle("Random test results (T = True, P = predicted", fontsize = 14)
+        plt.suptitle("Random test results (T = True, P = predicted)", fontsize = 14)
         plt.tight_layout()
         plt.show()
 

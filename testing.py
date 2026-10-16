@@ -1,5 +1,3 @@
-
-
 # Section 1: exponential growth test
 """
 value = 50
@@ -11,7 +9,7 @@ for i in range(100):
 """
 
 # Section 2: dictionaries in dictionaries
-
+"""
 cool_dict = {
     "key1": {
         "key2": "blah blah blah"
@@ -21,3 +19,12 @@ cool_dict = {
 print(cool_dict)
 print(cool_dict["key1"])
 print(cool_dict["key1"]["key2"])
+"""
+
+# Section 3: help with doc-strings in user-created modules
+
+import weight_mean
+help(weight_mean)
+
+import simple_b64
+help(simple_b64)
