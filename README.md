@@ -3,7 +3,7 @@ A public repository where I put some of my stuff, like coding projects, tests an
 
 All Python code in this repository uses **Python 3.14.8**. You need to use this version - or a version between 3.10 and 3.14 - as projects like the MNIST CNN only work with that version of Python.
 
-No code in this repository is AI-generated. However, for more complex code, **help from LLMs like Claude was used**. By that, I mean I asked it to teach me concepts or debug my code. **I wrote all the code myself**.
+No code in this repository is AI-generated. However, for more complex code, **help from LLMs like Claude was used**. By that, I mean I asked it, for some projects, to teach me concepts or debug my code. **I wrote all the code myself**.
 
 # Information
 ## Python Clicker Game
