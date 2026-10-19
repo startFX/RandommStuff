@@ -76,3 +76,33 @@ _K2R["を"] = "wo"
 
 _VOWELS = "aiueo"                                   # Vowels str
 _CONS = set("bcdfghjklmpqrstvwxyz")                 # Consonants set
+
+
+# Functions: characters and Unicode
+def is_hiragana(c: str) -> bool:
+    """Return True if c is a hiragana (between U+3041 and U+3096)."""
+    return "\u3041" <= c <= "\u3096"
+
+def is_katakana(c: str) -> bool:
+    """Return True if c is a katakana (between U+30a1 and U+30fa)."""
+    return "\u30a1" <= c <= "\u30fa"
+
+def to_hiragana(s: str) -> str:
+    """Return 's' with every katakana character replaced by hiragana.
+
+    Other characters like romaji are left unchanged.
+
+    >>> to_hiragana("サクラ")
+    'さくら'
+    """
+    return "".join(chr(ord(c) - 0x60) if is_katakana(s) else c for c in s)
+
+def to_katakana(s: str) -> str:
+    """Return 's' with every hiragana character replaced by katakana.
+
+    Other characters like romaji are left unchanged.
+
+    >>> to_katakana("さくら")
+    'サクラ'
+    """
+    return "".join(chr(ord(c) + 0x60) if is_hiragana(s) else c for c in s)
