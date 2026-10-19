@@ -3,6 +3,10 @@
 (placeholder)
 """
 
+LONG_MARK = "ー"     # Character given when typing '-'
+SOKUON = "っ"        # Doubles the next consonant
+
+# Main table
 _R = """
 a あ|i い|u う|e え|o お
 ka か|ki き|ku く|ke け|ko こ
@@ -41,3 +45,23 @@ xya ゃ|xyu ゅ|xyo ょ|lya ゃ|lyu ゅ|lyo ょ
 xtu っ|xtsu っ|ltu っ|ltsu っ
 nn ん|n' ん|xn ん
 """
+
+# Split table into a list of tuples.
+# Each tuple has two strings, the second being the hiragana character(s)
+# and the first being its romaji equivalent.
+ROMAJI_TABLE = []
+
+for _line in _R.strip().splitlines():       # Split by line first
+    for _item in _line.split("|"):          # Then by '|'
+        _r, _k = _item.split()              # Then by ' '
+        ROMAJI_TABLE.append((_r, _k))       # Finally, append tuple to list
+
+
+_R2K = dict(ROMAJI_TABLE)                           # Build dictionary from table
+_MAXLEN = max(len(r) for r, _ in ROMAJI_TABLE)      # Store the max length of romaji the code will have to process
+
+_PREFIXES = set()
+for _r, _ in ROMAJI_TABLE:                          # For each item,
+    for _i in range(1, len(_r)):                    # store its correct incomplete spellings.
+        _PREFIXES.add(_r[:_i])                      # shi: s, sh ; tsu: t, ts
+_PREFIXES.add("n")                                  # Add 'n' by hand, as it can become ん or na.
