@@ -138,7 +138,7 @@ def romaji_to_kana_partial(text: str, katakana: bool = False) -> tuple[str, str]
         #------------------------- Two blocks: -------------------------#
         # The first turns hyphens (ASCII, full-width or 'ー') into 'ー"  #
         # The second leaves any non-English letter unchanged.           #
-        #-------------------------------------------------------------(-#
+        #---------------------------------------------------------------#
         if c == "-" or c == "\uff0d" or c == "\u30fc":
             out.append(LONG_MARK)
             i+= 1
@@ -170,3 +170,26 @@ def romaji_to_kana_partial(text: str, katakana: bool = False) -> tuple[str, str]
         if rest == "nn":
             kana = "".join(out)
             return(to_katakana(kana) if katakana else kana), text[i:]
+
+        matched = False     # This is a flag
+        for L in range(min(_MAXLEN, len(rest)), 0, -1):     # Count down from the longest chunk length to 1
+            chunk = rest[:L]
+            if chunk in _R2K:               # Matched!
+                out.append(_R2K[chunk])     # Output
+                i += L                      # Advance by L
+                matched = True              # Set flag to True
+                break
+        if matched:                         # If yes match, continue
+            continue
+        # If no match, treat these three cases in order
+        if rest[0] == "n" and len(rest) >= 2 and rest[2] not in _VOWELS + "y":  # n before non-vowel
+            out.append("ん")
+            i += 1
+            continue
+        if rest in _PREFIXES or (len(rest) == 1 and rest in _CONS):             # prefix/consonant that can still grow
+            kana = "".join(out)
+            return to_katakana(kana) if katakana else kana, text[i:]
+        out.append(c)
+        i += 1
+    kana = "".join(out)
+    return to_katakana(kana) if katakana else kana, ""                          # anything else
