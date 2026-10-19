@@ -212,6 +212,7 @@ def romaji_to_kana(text: str, katakana: bool = False) -> str:
     >>> romaji_to_kana("sa-ku-ra", katakana=True)
     'サークーラ'
     >>> romaji_to_kana("sushi 42")
+    'すし 42'
     """
     kana, pending = romaji_to_kana_partial(text, katakana)
     if pending:                                         # Simplified writing to check if pending isn't empty
