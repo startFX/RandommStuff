@@ -95,7 +95,7 @@ def to_hiragana(s: str) -> str:
     >>> to_hiragana("サクラ")
     'さくら'
     """
-    return "".join(chr(ord(c) - 0x60) if is_katakana(s) else c for c in s)
+    return "".join(chr(ord(c) - 0x60) if is_katakana(c) else c for c in s)
 
 def to_katakana(s: str) -> str:
     """Return 's' with every hiragana character replaced by katakana.
@@ -105,4 +105,4 @@ def to_katakana(s: str) -> str:
     >>> to_katakana("さくら")
     'サクラ'
     """
-    return "".join(chr(ord(c) + 0x60) if is_hiragana(s) else c for c in s)
+    return "".join(chr(ord(c) + 0x60) if is_hiragana(c) else c for c in s)
