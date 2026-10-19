@@ -2,6 +2,7 @@
   <dictionary name="project">
     <words>
       <w>RandommStuff</w>
+      <w>maxlen</w>
       <w>trainval</w>
     </words>
   </dictionary>
