@@ -193,3 +193,31 @@ def romaji_to_kana_partial(text: str, katakana: bool = False) -> tuple[str, str]
         i += 1
     kana = "".join(out)
     return to_katakana(kana) if katakana else kana, ""                          # anything else
+
+def romaji_to_kana(text: str, katakana: bool = False) -> str:
+    """Convert romaji to hiragana (or katakana).
+
+    A trailing "n" becomes 'ん'.
+    Text that isn't romaji is left unchanged.
+
+    Args:
+        text (str): The text to convert.
+        katakana (bool, optional): If True, convert into katakana instead of hiragana.
+
+    Returns:
+        The converted string.
+
+    >>> romaji_to_kana("konnichiwa")
+    'こんにちわ'
+    >>> romaji_to_kana("sa-ku-ra", katakana=True)
+    'サークーラ'
+    >>> romaji_to_kana("sushi 42")
+    """
+    kana, pending = romaji_to_kana_partial(text, katakana)
+    if pending:                                         # Simplified writing to check if pending isn't empty
+        low = pending.lower()
+        if low in ("n", "nn"):                          # A trailing 'n' or 'nn' becomes 'ん'.
+            kana += "ん" if not katakana else "ン"
+        else:
+            kana += pending
+    return kana
