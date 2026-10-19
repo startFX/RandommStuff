@@ -106,3 +106,67 @@ def to_katakana(s: str) -> str:
     'サクラ'
     """
     return "".join(chr(ord(c) + 0x60) if is_hiragana(c) else c for c in s)
+
+# Romaji to Kana algorithm
+
+def romaji_to_kana_partial(text: str, katakana: bool = False) -> tuple[str, str]:
+    """Convert romaji to kana partially - convert only what's certain and leave the rest as is.
+    Made for real-time typing/partial conversion.
+
+    Args:
+        text (str): The text to convert.
+        katakana (bool, optional): Whether to convert to katakana
+            instead of hiragana or not.
+
+    Returns:
+        A tuple (kana, pending). pending is the trailing romaji that
+        can still become a syllable. It is "" is everything was
+        converted and nothing is undecided.
+
+    >>> romaji_to_kana_partial("kak")
+    ('か', 'k')
+    >>> romaji_to_kana_partial("hon")
+    ('ほ', 'n')
+    """
+    out = []
+    i = 0
+    n = len(text)
+    while i < n:
+        c = text[i]
+        lc = c.lower()
+
+        #------------------------- Two blocks: -------------------------#
+        # The first turns hyphens (ASCII, full-width or 'ー') into 'ー"  #
+        # The second leaves any non-English letter unchanged.           #
+        #-------------------------------------------------------------(-#
+        if c == "-" or c == "\uff0d" or c == "\u30fc":
+            out.append(LONG_MARK)
+            i+= 1
+            continue
+        if not (lc.isascii() or lc.isalpha()):
+            out.append(c)
+            i += 1
+            continue
+
+        #--------------------------------- Look at the lowercased rest of the text with this rule order: ---------------------------------#
+        # 1. two equal consonants that aren't 'n' (e.g. 'kk', 'tt')  -> output 'っ', advance one letter                                   #
+        # 2. text starting with 'tch'                                -> output 'っ', advance one letter                                   #
+        # 3. 'nn' followed by a vowel or 'y'                         -> output 'ん', advance one (the second 'n' starts another syllable) #
+        # 4. the rest is exactly nn                                  -> stop (pending)                                                    #
+        #---------------------------------------------------------------------------------------------------------------------------------#
+        rest = text[i:].lower()
+        if len(rest) >= 2 and rest[0] == rest[1] and rest[0] in _CONS and rest[0] != "n":
+            out.append(SOKUON)
+            i += 1
+            continue
+        if rest.startswith("tch"):
+            out.append(SOKUON)
+            i += 1
+            continue
+        if rest.startswith("nn") and len(rest) >= 3 and rest[2] in _VOWELS + "y":
+            out.append("ん")
+            i += 1
+            continue
+        if rest == "nn":
+            kana = "".join(out)
+            return(to_katakana(kana) if katakana else kana), text[i:]
