@@ -57,7 +57,7 @@ for _line in _R.strip().splitlines():       # Split by line first
         ROMAJI_TABLE.append((_r, _k))       # Finally, append tuple to list
 
 
-_R2K = dict(ROMAJI_TABLE)                           # Build dictionary from table
+_R2K = dict(ROMAJI_TABLE)                           # Build dictionary from table ("Romaji To Kana")
 _MAXLEN = max(len(r) for r, _ in ROMAJI_TABLE)      # Store the max length of romaji the code will have to process
 
 _PREFIXES = set()
@@ -65,3 +65,14 @@ for _r, _ in ROMAJI_TABLE:                          # For each item,
     for _i in range(1, len(_r)):                    # store its correct incomplete spellings.
         _PREFIXES.add(_r[:_i])                      # shi: s, sh ; tsu: t, ts
 _PREFIXES.add("n")                                  # Add 'n' by hand, as it can become ん or na.
+
+_K2R = {}                                           # Build reverse dictionary ("Kana To Romaji")
+for _r, _k in ROMAJI_TABLE:                         # For each item
+    if _r in ("nn", "n", "xn"):                     # Skip these three
+        continue
+    _K2R.setdefault(_k, _r)                         # Add to the dictionary in reverse order (kana -> romaji and not romaji -> kana)
+_K2R["ん"] = "n"                                    # Add these two manually
+_K2R["を"] = "wo"
+
+_VOWELS = "aiueo"                                   # Vowels str
+_CONS = set("bcdfghjklmpqrstvwxyz")                 # Consonants set
