@@ -8,7 +8,9 @@ Imports base64's b64decode and b64encode.
 
 from base64 import b64decode, b64encode
 
-def b64_encoded_str(s):
+__all__ = ["b64_encoded_str", "b64_decoded_str"]
+
+def b64_encoded_str(s: str) -> str:
   """
   Encodes a string in Base64 directly, without needing to use byte objects.
   Takes a str object as its only input.
@@ -18,7 +20,7 @@ def b64_encoded_str(s):
   return tmp.decode("utf-8")
 
 
-def b64_decoded_str(s):
+def b64_decoded_str(s: str) -> str:
   """
   Decodes a string from Base64 directly, without needing to use byte objects.
   Takes a str object as its only input.

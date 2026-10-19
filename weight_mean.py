@@ -1,8 +1,9 @@
-"""
-Utility functions for calculating weighted averages.
+"""Utility functions for calculating weighted averages.
 """
 
-def weight_mean_lists(values, weights):
+__all__ = ["weight_mean_lists", "weight_mean_2d"]
+
+def weight_mean_lists(values: list, weights:list) -> float:
     """
     Calculates a weighted average with two lists as arguments:
         - values: the values
@@ -10,10 +11,10 @@ def weight_mean_lists(values, weights):
     Returns a float.
 
     Usage example:
-    >>> v = [20, 15, 12]
-    >>> w = [1, 2, 0.5]
-    >>> weight_mean_lists(v, w)
-    13.428571428571429
+        >>> v = [20, 15, 12]
+        >>> w = [1, 2, 0.5]
+        >>> weight_mean_lists(v, w)
+        13.428571428571429
     """
     assert len(values) == len(weights), "The two lists' lengths must be the same"
     assert values != [], "Values list cannot be empty"
@@ -24,18 +25,18 @@ def weight_mean_lists(values, weights):
         total_weight += weights[i]
     return total / total_weight
 
-def weight_mean_2d(values):
+def weight_mean_2d(values: list) -> float:
     """
     Calculates a weighted average with a list as argument:
         - values: a list containing lists. Each item is another list containing two values: the value itself and its weight. Here's an example:
-            >>> ex = [[20, 1], [15, 2], [12, 0.5]]
+                ex = [[20, 1], [15, 2], [12, 0.5]]
             So, here, the 20 has a weight of 1, 15 a weight of 2, 12 a weight of 0.5.
     Returns a float.
 
     Usage example:
-    >>> v = [[20, 1], [15, 2], [12, 0.5]]
-    >>> weight_mean_2d(v)
-    13.428571428571429
+        >>> v = [[20, 1], [15, 2], [12, 0.5]]
+        >>> weight_mean_2d(v)
+        13.428571428571429
     """
     for i in values:
         assert len(i) == 2, "Value list items must have two items"
