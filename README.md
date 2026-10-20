@@ -27,6 +27,9 @@ All modules above can be installed using `pip install`. However, the file also r
 ## simple_b64.py
 Functions to quickly encode to and decode from Base64. Uses str objects as inputs and outputs str objects directly, rather than going through byte conversion. **Use Python's built-in `help()` function for more info.**
 
+## romaji_kana.py
+A module with functions to convert text between romaji, hiragana and katakana (Japanese characters). **Use Python's built-in `help()` function for more info.**
+
 ## weight_mean.py
 Utility functions for calculating weighted averages. **Use Python's built-in `help()` function for more info.**
 
