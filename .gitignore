@@ -216,7 +216,7 @@ __marimo__/
 
 
 # Python Clicker Game save file
-Python Clicker Game/clicker_game.save.txt
+Python/Python Clicker Game/clicker_game.save.txt
 
 # Streamlit
 .streamlit/secrets.toml
