@@ -57,11 +57,6 @@ upgrades_max_level = [
     20,
     38,
 ]
-### AVAILABLE LANGUAGES
-available_languages = [
-    "en_us",
-    "fr_fr",
-]
 
 ### FUNCTIONS
 def get_game_path(file_name):
