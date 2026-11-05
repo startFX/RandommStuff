@@ -3,20 +3,12 @@
         "0": {
             "type": "bool",
             "value": "False"
-        },
-        "1": {
-            "type": "str",
-            "value": "en_us"
         }
     },
     "config.user": {
         "0": {
             "type": "bool",
             "value": "False"
-        },
-        "1": {
-            "type": "str",
-            "value": "en_us"
         }
     }
 }

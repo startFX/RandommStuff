@@ -1,7 +1,13 @@
 {
+    "comment.commenting_instructions.1": "When adding comments, use this format for the key:",
+    "comment.commenting_instructions.2": "comment.<random lowercase letter><7 random digits>",
+    "comment.commenting_instructions.3": "They don't need to be actually random, of course.",
+    "comment.commenting_instructions.4": "Just random enough that there aren't any duplicates.",
+
+
     "menu.intro": "\nCLICKER GAME\nWelcome to a simple clicking game!\nLeave empty to click.\nEnter [H] for help on available commands. This is highly recommended if this is your first time playing.\nSaving is not automatic, but entering [Q] saves the game before quitting. You can quit without saving with [-].",
     "menu.input_instructions": "Leave empty to click.\nEnter [H] for help on available commands or [Q] to quit.\n>>> ",
-    "menu.help": "Keybinds:\n- [H]: view this help menu\n- [S]: save game\n- [L]: load game from save file\n- [C]: access config/settings menu\n- [Q]: save & quit game\n- [-]: quit game without saving\n- [U]: view upgrade menu\n- [I]: view extra information for advanced players",
+    "menu.help": "Keybinds:\n- [H]: view this help menu\n- [S]: save game\n- [L]: load game from save file\n- [C]: access config/settings menu\n- [Q]: save & quit game\n- [-]: quit game without saving\n- [U]: view upgrade menu\n- [F]: view extra information for advanced players\n- [I]: view save statistics",
     "menu.extra_info": "Extra information (can be useful for more advanced players):\n- by default, you have a 5% chance of getting a critical hit every time you click.",
 
     "menu.quit_message": "See you next time!",
@@ -12,6 +18,8 @@
     "interface.click_count.plural": "You have {count} clicks.",
     "interface.critical_hit_count.singular": "You have {count} critical hit.",
     "interface.critical_hit_count.plural": "You have {count} critical hits.",
+
+    "comment.d2838294": "The interface.critical_hit_count keys are unused at the moment.",
 
     "status.click.singular": "+{count} click!",
     "status.click.plural": "+{count} clicks!",
@@ -79,17 +87,17 @@
             "name": "Load save file on startup",
             "name_id": "{id}: Load save file on startup",
             "flavor": "   Whether to load an existing save file on game startup."
-        },
-        "1": {
-            "name": "Language",
-            "name_id": "{id}: Language",
-            "flavor": "   What language the game uses.",
-            "available_language_names": {
-                "en_us": "English (US)",
-                "fr_fr": "French (France)"
-            }
         }
     },
 
-    "menu.config.restart_notice": "The user configuration has changed. A restart is needed to write changes into the config and apply it.\nLeave the input field empty if you wish to save and quit.\nEnter something to quit without saving.\nYou will have to start the game again yourself.\n>>> "
+    "menu.config.restart_notice": "The user configuration has changed. A restart is needed to write changes into the config and apply it.\nLeave the input field empty if you wish to save and quit.\nEnter something to quit without saving.\nYou will have to start the game again yourself.\n>>> ",
+
+
+    "menu.stats.title": "STATISTICS",
+    "menu.stats.input": "Confirm to quit: ",
+
+    "menu.stats.clicks_in_bank": "Amount of clicks in bank:",
+    "menu.stats.clicks_all_time": "Clicks (all time):",
+    "menu.stats.critical_hits_all_time": "Critical hits (all time):"
+
 }

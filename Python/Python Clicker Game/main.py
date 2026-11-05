@@ -5,9 +5,11 @@ import sys
 import copy
 from random import *
 from pathlib import Path
+import clicker_functions as cf
 
 ### CONSTANTS
-FILE_NAME = "clicker_game"
+SAVE_FILE_SECRET_MESSAGE = "Good job on decoding the save file! Don't cheat. You've been warned."
+FILE_NAME = "clicker_game"      # NOT the actual file name but the one used in separate files like saves and configs.
 SAVE_FILE_SUFFIX =".save.txt"
 CONFIG_FILE_SUFFIX =".config.json"
 LANG_FILE_SUFFIXES = (".lang.", ".json")
@@ -18,8 +20,9 @@ UPGRADE_PRICE_MULTIPLIER = 1.175
 
 ## Save data values
 # Statistics
-clicks = 0
-critical_hits = 0
+clicks = 0                      # Amount of clicks in bank.
+clicks_all_time = 0             # Amount of clicks for all time in save file. Should never decrease.
+critical_hits_all_time = 0      # Amount of critical hits for all time in save file. Should never decrease.
 
 # Gameplay
 click_power = 1
@@ -77,20 +80,22 @@ def load_game():
     return decoded_data
 
 def load_save_data(decoded_data):
-    global clicks, critical_hits, upgrades_level
+    global clicks, critical_hits_all_time, upgrades_level, clicks_all_time
 
     save_data = json.loads(decoded_data)
 
     clicks = save_data["clicks"]
-    critical_hits = save_data["critical_hits"]
+    critical_hits_all_time = save_data["critical_hits"]
     upgrades_level = save_data["upgrades_level"]
+    clicks_all_time = save_data["clicks_all_time"]
 
 def save_game():
     save_data = {
-        "misc.message": "Good job on decoding the save file! Don't use this knowledge to cheat, though. That wouldn't be very cool.",
+        "misc.message": SAVE_FILE_SECRET_MESSAGE,
         "clicks": clicks,
-        "critical_hits": critical_hits,
+        "critical_hits": critical_hits_all_time,
         "upgrades_level": upgrades_level,
+        "clicks_all_time": clicks_all_time,
     }
 
     json_string = json.dumps(save_data, indent = 4)
@@ -242,20 +247,28 @@ def config_menu():
                 else:
                     c["config.user"][str(user_c)]["value"] = "False"
             elif temp == "str":
-                if user_c == 1: # If the setting is the language setting
-                    while True:
-                        print(l["menu.config.language.title"])
-                        for i in range(len(available_languages)):
-                            print(str(i+1) + ": " + available_languages[i] + " - " +l["menu.config.info"]["1"]["available_language_names"][available_languages[i]])
-                        print("")
-                        user_input = input(l["menu.config.language.input_instructions"])
-                        if user_input == "":
-                            break
-                        if user_input in [str(i+1) for i in range(len(available_languages))]:
-                            c["config.user"][str(user_c)]["value"] = available_languages[int(user_input) - 1]
-                            break
+                pass
             status = l["menu.config.status.changed"].format(name = l["menu.config.info"][str(user_c)]["name"], before = value_before, after = c["config.user"][str(user_c)]["value"])
 
+def statistics_menu():
+    """
+    Statistics menu code.
+    """
+    print(l["menu.stats.title"])
+    print("")
+
+    labels = cf.indent_colons([
+        l["menu.stats.clicks_in_bank"],
+        l["menu.stats.clicks_all_time"],
+        l["menu.stats.critical_hits_all_time"]
+    ])
+
+    print(labels[0], str(clicks))
+    print(labels[1], str(clicks_all_time))
+    print(labels[2], str(critical_hits_all_time))
+
+    print("")
+    input(l["menu.stats.input"])
 
 ### DATA LOADING
 # lang file JSON loading
@@ -263,8 +276,7 @@ def config_menu():
 with open(get_game_path(FILE_NAME + CONFIG_FILE_SUFFIX), "r", encoding = "utf-8") as file:
     c = json.load(file)
 
-LANGUAGE = c["config.user"]["1"]["value"]
-with open(get_game_path(FILE_NAME + LANG_FILE_SUFFIXES[0] + LANGUAGE + LANG_FILE_SUFFIXES[1]), "r", encoding = "utf-8") as file:
+with open(get_game_path(FILE_NAME + LANG_FILE_SUFFIXES[0] + "en_us" + LANG_FILE_SUFFIXES[1]), "r", encoding = "utf-8") as file:
     l = json.load(file)
 
 
@@ -282,25 +294,23 @@ while True:
         print(l["interface.click_count.singular"].format(count = clicks))
     else:
         print(l["interface.click_count.plural"].format(count = clicks))
-    if critical_hits == 1:
-        print(l["interface.critical_hit_count.singular"].format(count = critical_hits))
-    else:
-        print(l["interface.critical_hit_count.plural"].format(count = critical_hits))
 
     user = input(l["menu.input_instructions"])
     print("\n\n") # Leave space between turns
 
     if user == "":
         if random() * 1000 < critical_hit_chance:
-            critical_hits += 1
+            critical_hits_all_time += 1
             temp = randint(critical_hit_base, critical_hit_base + critical_hit_range)
             clicks += temp
+            clicks_all_time += temp
             if temp == 1:
                 print(l["status.critical_hit.singular"].format(count = temp))
             else:
                 print(l["status.critical_hit.plural"].format(count = temp))
         else:
             clicks += click_power
+            clicks_all_time += click_power
             if click_power == 1:
                 print(l["status.click.singular"].format(count = click_power))
             else:
@@ -322,8 +332,11 @@ while True:
     elif user.lower() == "h": # Show help
         print(l["menu.help"])
 
-    elif user.lower() == "i": # Show extra info
+    elif user.lower() == "f": # Show extra info
         print(l["menu.extra_info"])
+
+    elif user.lower() == "i":
+        statistics_menu()
 
     elif user.lower() == "-": # Quit game without saving
         print(l["menu.quit_message.no_save"])
