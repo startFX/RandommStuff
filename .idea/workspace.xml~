@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="9dc6ec66-13a1-4efa-85d2-b61dcc78df00" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/Python/romaji_kana.py" beforeDir="false" afterPath="$PROJECT_DIR$/Python/romaji_kana.py" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;startFX&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/startFX/RandommStuff.git&quot;,
+    &quot;accountId&quot;: &quot;93497aed-c2ab-4c4e-9fbc-545900675700&quot;
+  }
+}</component>
+  <component name="NextEditCompletionFeaturesState">
+    <decayedCancelled>
+      <entry key="MS100" value="1.0" />
+      <entry key="MS500" value="1.0000000041622195" />
+      <entry key="S2" value="1.008193950996966" />
+      <entry key="S5" value="1.185960743542766" />
+      <entry key="S10" value="1.7263451607483034" />
+      <entry key="S30" value="4.181577691891048" />
+      <entry key="S60" value="7.704434163968081" />
+      <entry key="M2" value="16.19193381852321" />
+      <entry key="M5" value="48.070243116510554" />
+      <entry key="M10" value="109.22907721107255" />
+      <entry key="M15" value="169.2445277773822" />
+      <entry key="M30" value="324.38770363392183" />
+      <entry key="H1" value="527.1982794150545" />
+      <entry key="H2" value="715.0471885064889" />
+      <entry key="H4" value="847.8479140369271" />
+      <entry key="D1" value="986.5681896449863" />
+      <entry key="W1" value="1013.4272485663421" />
+    </decayedCancelled>
+    <decayedSelected>
+      <entry key="MS100" value="0.0" />
+      <entry key="MS500" value="5.508172566659643E-145" />
+      <entry key="S2" value="8.614932612447398E-37" />
+      <entry key="S5" value="3.7514017938913205E-15" />
+      <entry key="S10" value="6.24177399718478E-8" />
+      <entry key="S30" value="0.005594432530977784" />
+      <entry key="S60" value="0.12520826713670583" />
+      <entry key="M2" value="0.7138263973075507" />
+      <entry key="M5" value="2.4130745899337778" />
+      <entry key="M10" value="3.9366810618212207" />
+      <entry key="M15" value="4.968238774721398" />
+      <entry key="M30" value="7.7899093919641365" />
+      <entry key="H1" value="12.161650368987255" />
+      <entry key="H2" value="16.5681190717277" />
+      <entry key="H4" value="19.79133969232118" />
+      <entry key="D1" value="23.21739231638374" />
+      <entry key="W1" value="23.886019761652573" />
+    </decayedSelected>
+    <decayedShown>
+      <entry key="MS100" value="4.6255998733837856E-5" />
+      <entry key="MS500" value="0.1358418578553495" />
+      <entry key="S2" value="0.6097314465377314" />
+      <entry key="S5" value="0.9427065413910655" />
+      <entry key="S10" value="1.5039618976576015" />
+      <entry key="S30" value="3.991412841283068" />
+      <entry key="S60" value="7.673962611197359" />
+      <entry key="M2" value="16.783915280549703" />
+      <entry key="M5" value="50.38742128245005" />
+      <entry key="M10" value="113.07927112605304" />
+      <entry key="M15" value="174.13026251153397" />
+      <entry key="M30" value="332.10454095619696" />
+      <entry key="H1" value="539.3029004995643" />
+      <entry key="H2" value="731.5774090508964" />
+      <entry key="H4" value="867.617009489557" />
+      <entry key="D1" value="1009.7813034799725" />
+      <entry key="W1" value="1037.3126413565924" />
+    </decayedShown>
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 4
+}</component>
+  <component name="ProjectId" id="3K3XmsTt82S5SKlFkZ37Teiam1M" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;CidrDebugProfileConversion&quot;: &quot;true&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;Python tests.Doctests in clicker_functions.executor&quot;: &quot;Run&quot;,
+    &quot;Python tests.Doctests in romaji_kana.executor&quot;: &quot;Run&quot;,
+    &quot;Python tests.Doctests in weight_mean.executor&quot;: &quot;Run&quot;,
+    &quot;Python.DigitsCNN.executor&quot;: &quot;Run&quot;,
+    &quot;Python.clicker_game.executor&quot;: &quot;Run&quot;,
+    &quot;Python.exponential_growth_test.executor&quot;: &quot;Run&quot;,
+    &quot;Python.main.executor&quot;: &quot;Run&quot;,
+    &quot;Python.romaji_kana.executor&quot;: &quot;Run&quot;,
+    &quot;Python.simple_b64.executor&quot;: &quot;Run&quot;,
+    &quot;Python.testing.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.rust.reset.selective.auto.import&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
+    &quot;codeWithMe.voiceChat.enabledByDefault&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/Non-Lycée/GitHub Stuff/RandommStuff&quot;,
+    &quot;node.js.detected.package.jshint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.jshint&quot;: &quot;&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;python.packages.toolwindow.project.migrated.to.right.top.v2&quot;: &quot;true&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;editor.preferences.fonts.default&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="G:\Non-Lycée\GitHub Stuff\RandommStuff\Python Clicker Game" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\Non-Lycée\GitHub Stuff\RandommStuff\Python" />
+      <recent name="G:\Non-Lycée\GitHub Stuff\RandommStuff\Python Clicker Game" />
+      <recent name="G:\Non-Lycée\GitHub Stuff\RandommStuff" />
+    </key>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-js-predefined-d6986cc7102b-4abd2a77f808-JavaScript-PY-262.11879.98" />
+        <option value="bundled-python-sdk-ebb3072d7bdf-5bd6d13a2a75-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-262.11879.98" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="9dc6ec66-13a1-4efa-85d2-b61dcc78df00" name="Changes" comment="" />
+      <created>1790787388120</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1790787388120</updated>
+      <workItem from="1791748164006" duration="520000" />
+      <workItem from="1791821957446" duration="529000" />
+      <workItem from="1791823458933" duration="8601000" />
+      <workItem from="1791996658365" duration="1702000" />
+      <workItem from="1792095428338" duration="919000" />
+      <workItem from="1793730686371" duration="89000" />
+      <workItem from="1793875844468" duration="4688000" />
+      <workItem from="1793901452080" duration="774000" />
+      <workItem from="1793902981912" duration="2445000" />
+      <workItem from="1794230504213" duration="392000" />
+      <workItem from="1794231373781" duration="1041000" />
+      <workItem from="1794234360003" duration="2070000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/RandommStuff$clicker_game.coverage" NAME="clicker_game Coverage Results" MODIFIED="1793879675563" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Python/Python Clicker Game" />
+    <SUITE FILE_PATH="coverage/RandommStuff$simple_b64.coverage" NAME="simple_b64 Coverage Results" MODIFIED="1793880432299" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Python" />
+    <SUITE FILE_PATH="coverage/RandommStuff$Doctests_in_romaji_kana.coverage" NAME="Doctests in romaji_kana Coverage Results" MODIFIED="1794236698418" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Python" />
+    <SUITE FILE_PATH="coverage/RandommStuff$main.coverage" NAME="main Coverage Results" MODIFIED="1793903143544" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Python/Python Clicker Game" />
+    <SUITE FILE_PATH="coverage/RandommStuff$DigitsCNN.coverage" NAME="DigitsCNN Coverage Results" MODIFIED="1791997597401" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/MNIST Handwritten Digits CNN" />
+    <SUITE FILE_PATH="coverage/RandommStuff$Doctests_in_clicker_functions.coverage" NAME="Doctests in clicker_functions Coverage Results" MODIFIED="1793878115870" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Python/Python Clicker Game" />
+  </component>
+</project>

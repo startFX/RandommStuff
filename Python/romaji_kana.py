@@ -1,7 +1,39 @@
 """Convert between romaji, hiragana and katakana.
 
-(placeholder)
+A module for Japanese text typed on a Latin keyboard.
+It can convert from romaji to hiragana/katakana and back and
+has functionality for "live" conversion and includes utilities for working with kana text.
+
+Quick start:
+    >>> from romaji_kana import romaji_to_kana, convert, kana_to_romaji
+    >>> romaji_to_kana("konnichiwa")
+    'こんにちわ'
+    >>> convert("サクラ")
+    'さくら'
+    >>> kana_to_romaji("がっこう")
+    'gakkou'
+
+Typing rules for romaji input:
+    - "-" gives ー (the long vowel mark).
+    - A doubled consonant gives っ ("kk" becomes っ by "k...").
+    - "nn" or "n'" both give ん; "nn" before a vowel gives ん followed by an n-syllable.
+    - Hepburn (shi, chi, tsu) and Nihon-shiki (si, ti, tu) spellings both work.
+    - Anything that isn't romaji (kana, digits or punctuation) is left unchanged.
+
+Command line support:
+    python romaji_kana.py                       interactive converter
+    python romaji_kana.py sakura --katakana     one-off conversion
 """
+
+from __future__ import annotations
+
+import sys
+
+__version__ = "1.0.0"
+
+__all__ = ["romaji_to_kana", "kana_to_romaji", "romaji_to_kana_partial", "convert",
+           "is_kana", "split_kana", "is_hiragana", "is_katakana", "to_hiragana",
+           "to_katakana", "has_ascii_letters", "LONG_MARK", "SOKUON"]
 
 LONG_MARK = "ー"     # Character given when typing '-'
 SOKUON = "っ"        # Doubles the next consonant
@@ -75,7 +107,7 @@ _K2R["ん"] = "n"                                    # Add these two manually
 _K2R["を"] = "wo"
 
 _VOWELS = "aiueo"                                   # Vowels str
-_CONS = set("bcdfghjklmpqrstvwxyz")                 # Consonants set
+_CONS = set("bcdfghjklmpqrstvwxyz")             # Consonants set
 
 
 # Functions: characters and Unicode
@@ -88,7 +120,7 @@ def is_katakana(c: str) -> bool:
     return "\u30a1" <= c <= "\u30fa"
 
 def to_hiragana(s: str) -> str:
-    """Return 's' with every katakana character replaced by hiragana.
+    """Return `s` with every katakana character replaced by hiragana.
 
     Other characters like romaji are left unchanged.
 
@@ -120,7 +152,7 @@ def romaji_to_kana_partial(text: str, katakana: bool = False) -> tuple[str, str]
 
     Returns:
         A tuple (kana, pending). pending is the trailing romaji that
-        can still become a syllable. It is "" is everything was
+        can still become a syllable. It is "" if everything was
         converted and nothing is undecided.
 
     >>> romaji_to_kana_partial("kak")
@@ -136,7 +168,7 @@ def romaji_to_kana_partial(text: str, katakana: bool = False) -> tuple[str, str]
         lc = c.lower()
 
         #------------------------- Two blocks: -------------------------#
-        # The first turns hyphens (ASCII, full-width or 'ー') into 'ー"  #
+        # The first turns hyphens (ASCII, full-width or 'ー') into 'ー'  #
         # The second leaves any non-English letter unchanged.           #
         #---------------------------------------------------------------#
         if c == "-" or c == "\uff0d" or c == "\u30fc":
@@ -222,3 +254,189 @@ def romaji_to_kana(text: str, katakana: bool = False) -> str:
         else:
             kana += pending
     return kana
+
+def has_ascii_letters(s: str) -> bool:
+    """Return True if `s` contains at least one plain letter (a-z or A-Z).
+
+    >>> has_ascii_letters("sakura"), has_ascii_letters("さくら")
+    (True, False)
+    """
+    return any(c.isascii() and c.isalpha() for c in s)
+
+def kana_to_romaji(text: str) -> str:
+    """Convert hiragana or katakana to romaji with Hepburn-style spelling.
+
+    Args:
+        text (str): The text to convert. Can be hiragana or katakana.
+                    Other characters are left unchanged.
+
+    Returns:
+        The converted string.
+
+    >>> kana_to_romaji("がっこう")
+    'gakkou'
+    >>> kana_to_romaji("サークーラ")
+    'sa-ku-ra'
+    """
+    text = to_hiragana(text)        # Convert to hiragana first
+    out = []
+    i = 0
+    n = len(text)
+    while i < n:
+        c = text[i]
+        if c == LONG_MARK:          # No need for extra processing
+            out.append("-")         # This is a set case
+            i += 1
+        elif c == "っ":              # Sokuon
+            nxt = None
+            if i + 1 < n:
+                two = text[i + 1:i + 3]
+                nxt = _K2R.get(two) or _K2R.get(text[i + 1])
+            if nxt and nxt[0] in _CONS:        # Double next consonant
+                out.append("t" if nxt.startswith("ch") else nxt[0])
+            else:
+                out.append("xtu")               # Nothing is after: we append "xtu"
+            i += 1
+        elif c == "ん":                          # n, n' if before a vowel
+            nxt = _K2R.get(text[i + 1:i + 3]) or _K2R.get(text[i + 1:i + 2]) if i + 1 < n else None
+            if nxt and (nxt[0] in _VOWELS or nxt[0] == "y" or nxt[0] == "n"):
+                out.append("n'")
+            else:
+                out.append("n")
+            i += 1
+        else:
+            two = text[i:i + 2]
+            if len(two) == 2 and two in _K2R:   # Known combination
+                out.append(_K2R[two])
+                i += 2
+            elif c in _K2R:                     # One kana
+                out.append(_K2R[c])
+                i += 1
+            else:                               # Unknown character
+                out.append(c)
+                i += 1
+    return "".join(out)
+
+def is_kana(text: str, allow: str="") -> bool:
+    """Return True if `text` is made only of kana and isn't empty.
+    Hiragana, katakana and the long mark ('ー') all count as kana.
+
+    Args:
+        text: The text to check.
+        allow: Extra characters to accept.
+
+    >>> is_kana("さーくー"), is_kana("sa"), is_kana("")
+    (True, False, False)
+    >>> is_kana("さ く", allow=" ")
+    True
+    """
+    if not text:        # If text is empty
+        return False
+    return all(is_hiragana(c) or is_katakana(c) or c == LONG_MARK or c in allow for c in text)
+
+def convert(text: str, to: str="hiragana") -> str:
+    """Convert text, whether it's in romaji, hiragana or katakana, to a single script.
+
+    Args:
+        text: Romaji, hiragana, katakana, or any mix of them.
+        to: The target script. "hiragana", "katakana" or "romaji".
+
+    Returns:
+        The converted string.
+
+    Raises:
+        ValueError: if `to` is not one of the three targets.
+
+    >>> convert("sakura"), convert("sakura", "katakana")
+    ('さくら', 'サクラ')
+    >>> convert("さくら", "romaji")
+    'sakura'
+    """
+    if to == "romaji":
+        return kana_to_romaji(text)
+    if to == "katakana":
+        return romaji_to_kana(text, katakana=True)
+    if to == "hiragana":
+        return to_hiragana(romaji_to_kana(text))
+    raise ValueError('to must be "hiragana", "katakana" or "romaji"')
+
+_SMALL = set("ゃゅょぁぃぅぇぉゎャュョァィゥェォヮ")
+
+def split_kana(text: str) -> list[str]:
+    """Split kana text into syllables (morae), with each taking up one list entry.
+
+    Small kana (ゃ, ゅ, ょ, ぁ...) join the previous kana.
+    ー, っ and ん each take up an entry of their own.
+
+    >>> split_kana("きゃくせん")
+    ['きゃ', 'く', 'せ', 'ん']
+    >>> split_kana("がっこう")
+    ['が', 'っ', 'こ', 'う']
+    """
+    out = []
+    for c in text:
+        if c in _SMALL and out and out[-1] not in (LONG_MARK, SOKUON, "ッ"):      # Small kana join the previous entry
+            out[-1] += c
+        else:
+            out.append(c)
+    return out
+
+def same_reading(a: str, b: str) -> bool:
+    """Returns True if `a` and `b` are read the same, regardless of the script they're in.
+
+    Args:
+        a: String to compare b to.
+        b: String to compare to a.
+
+    Returns:
+        True if `a` and `b` are read the same.
+
+    >>> same_reading("kyakusen", "きゃくせん"), same_reading("sakura", "がっこう")
+    (True, False)
+    """
+    return convert(a) == convert(b)
+
+def morae(text: str) -> int:
+    """Count how many morae are in a text composed of any script.
+
+    Args:
+        text: The text to count the amount of morae of. Can be hiragana, katakana or romaji.
+
+    Returns:
+        How many morae are in the given text.
+
+    >>> morae("haiku"), morae("mizu no oto"), morae("wagahai ha neko de aru")
+    (3, 5, 10)
+    """
+    return len(split_kana(convert(text.replace(" ", ""))))      # Remove spaces just in case
+
+
+
+def _roundtrip_ok(text: str) -> bool:
+    """Test if some romaji text stays the same after being converted to kana and back."""
+    return romaji_to_kana(kana_to_romaji(text)) == text
+
+def _main(argv):
+    """Command line tool."""
+    katakana = "--katakana" in argv
+    args = [a for a in argv if a != "--katakana"]
+    if args:
+        print(romaji_to_kana(" ".join(args), katakana))
+        return
+    print("romaji_kana - type romaji to get kana, or kana to get romaji. Ctrl+C to quit.")
+    while True:
+        try:
+            line = input("> ").strip()
+        except (EOFError, KeyboardInterrupt):
+            print()
+            break
+        if not line:
+            continue
+        if has_ascii_letters(line) or "-" in line:
+            print("  kana  :", romaji_to_kana(line, katakana))
+        else:
+            print("  romaji:", kana_to_romaji(line))
+
+
+if __name__ == "__main__":      # Only True when ran. False when imported
+    _main(sys.argv[1:])

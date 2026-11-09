@@ -22,9 +22,12 @@ print(cool_dict["key1"]["key2"])
 """
 
 # Section 3: help with doc-strings in user-created modules
-
+"""
 import weight_mean
 help(weight_mean)
 
 import simple_b64
 help(simple_b64)
+"""
+import romaji_kana as rk
+help(rk)
