@@ -5,12 +5,12 @@ It can convert from romaji to hiragana/katakana and back and
 has functionality for "live" conversion and includes utilities for working with kana text.
 
 Quick start:
-    >>> from romaji_kana import romaji_to_kana, convert, kana_to_romaji
-    >>> romaji_to_kana("konnichiwa")
+    >>> import romaji_kana
+    >>> romaji_kana.romaji_to_kana("konnichiwa")
     'こんにちわ'
-    >>> convert("サクラ")
+    >>> romaji_kana.convert("サクラ")
     'さくら'
-    >>> kana_to_romaji("がっこう")
+    >>> romaji_kana.kana_to_romaji("がっこう")
     'gakkou'
 
 Typing rules for romaji input:
@@ -33,7 +33,8 @@ __version__ = "1.0.0"
 
 __all__ = ["romaji_to_kana", "kana_to_romaji", "romaji_to_kana_partial", "convert",
            "is_kana", "split_kana", "is_hiragana", "is_katakana", "to_hiragana",
-           "to_katakana", "has_ascii_letters", "LONG_MARK", "SOKUON"]
+           "to_katakana", "has_ascii_letters", "same_reading", "morae",
+           "LONG_MARK", "SOKUON"]
 
 LONG_MARK = "ー"     # Character given when typing '-'
 SOKUON = "っ"        # Doubles the next consonant
@@ -107,16 +108,16 @@ _K2R["ん"] = "n"                                    # Add these two manually
 _K2R["を"] = "wo"
 
 _VOWELS = "aiueo"                                   # Vowels str
-_CONS = set("bcdfghjklmpqrstvwxyz")             # Consonants set
+_CONS = set("bcdfghjklmpqrstvwxyz")                 # Consonants set
 
 
 # Functions: characters and Unicode
 def is_hiragana(c: str) -> bool:
-    """Return True if c is a hiragana (between U+3041 and U+3096)."""
+    """Return True if `c` is a hiragana (between U+3041 and U+3096)."""
     return "\u3041" <= c <= "\u3096"
 
 def is_katakana(c: str) -> bool:
-    """Return True if c is a katakana (between U+30a1 and U+30fa)."""
+    """Return True if `c` is a katakana (between U+30a1 and U+30fa)."""
     return "\u30a1" <= c <= "\u30fa"
 
 def to_hiragana(s: str) -> str:
@@ -168,7 +169,7 @@ def romaji_to_kana_partial(text: str, katakana: bool = False) -> tuple[str, str]
         lc = c.lower()
 
         #------------------------- Two blocks: -------------------------#
-        # The first turns hyphens (ASCII, full-width or 'ー') into 'ー'  #
+        # The first turns hyphens (ASCII, full-width or 'ー') into 'ー' #
         # The second leaves any non-English letter unchanged.           #
         #---------------------------------------------------------------#
         if c == "-" or c == "\uff0d" or c == "\u30fc":
@@ -214,10 +215,11 @@ def romaji_to_kana_partial(text: str, katakana: bool = False) -> tuple[str, str]
         if matched:                         # If yes match, continue
             continue
         # If no match, treat these three cases in order
-        if rest[0] == "n" and len(rest) >= 2 and rest[2] not in _VOWELS + "y":  # n before non-vowel
-            out.append("ん")
-            i += 1
-            continue
+        if rest[0] == "n" and len(rest) >= 2:
+            if rest[1] not in _VOWELS + "y":
+                out.append("ん")
+                i += 1
+                continue
         if rest in _PREFIXES or (len(rest) == 1 and rest in _CONS):             # prefix/consonant that can still grow
             kana = "".join(out)
             return to_katakana(kana) if katakana else kana, text[i:]
@@ -355,7 +357,7 @@ def convert(text: str, to: str="hiragana") -> str:
     if to == "romaji":
         return kana_to_romaji(text)
     if to == "katakana":
-        return romaji_to_kana(text, katakana=True)
+        return to_katakana(romaji_to_kana(text, katakana=True))
     if to == "hiragana":
         return to_hiragana(romaji_to_kana(text))
     raise ValueError('to must be "hiragana", "katakana" or "romaji"')
@@ -363,7 +365,7 @@ def convert(text: str, to: str="hiragana") -> str:
 _SMALL = set("ゃゅょぁぃぅぇぉゎャュョァィゥェォヮ")
 
 def split_kana(text: str) -> list[str]:
-    """Split kana text into syllables (morae), with each taking up one list entry.
+    """Split kana text into morae, with each taking up one list entry.
 
     Small kana (ゃ, ゅ, ょ, ぁ...) join the previous kana.
     ー, っ and ん each take up an entry of their own.
@@ -407,6 +409,8 @@ def morae(text: str) -> int:
 
     >>> morae("haiku"), morae("mizu no oto"), morae("wagahai ha neko de aru")
     (3, 5, 10)
+    >>> morae("さくららら")
+    5
     """
     return len(split_kana(convert(text.replace(" ", ""))))      # Remove spaces just in case
 
@@ -414,7 +418,7 @@ def morae(text: str) -> int:
 
 def _roundtrip_ok(text: str) -> bool:
     """Test if some romaji text stays the same after being converted to kana and back."""
-    return romaji_to_kana(kana_to_romaji(text)) == text
+    return kana_to_romaji(romaji_to_kana(text)) == text
 
 def _main(argv):
     """Command line tool."""
