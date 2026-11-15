@@ -31,6 +31,10 @@ import sys
 
 __version__ = "1.0.0"
 
+_changelog = {
+    "1.0.0": "Initial release",
+}
+
 __all__ = ["romaji_to_kana", "kana_to_romaji", "romaji_to_kana_partial", "convert",
            "is_kana", "split_kana", "is_hiragana", "is_katakana", "to_hiragana",
            "to_katakana", "has_ascii_letters", "same_reading", "morae",
