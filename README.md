@@ -30,6 +30,9 @@ Functions to quickly encode to and decode from Base64. Uses str objects as input
 ## romaji_kana.py
 A module with functions to convert text between romaji, hiragana and katakana (Japanese characters). **Use Python's built-in `help()` function for more info.**
 
+## gdtools.py
+A module with tools for working with Geometry Dash data. It is unfinished **and will likely never be updated** (E.G. to add more available endpoints). It currently allows for decoding data from the Geometry Dash servers, searching for levels on the servers, downloading a level from the server and getting user and song info. It also has some utility functions. This module has no docstrings for its functions.
+
 ## weight_mean.py
 Utility functions for calculating weighted averages. **Use Python's built-in `help()` function for more info.**
 

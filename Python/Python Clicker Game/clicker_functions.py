@@ -48,3 +48,31 @@ def indent_colons(l):
             )
 
     return output
+
+def xor_cipher(text, key):
+    """Cipher some text with XOR cipher.
+
+    Params:
+        - text (str): The text to be ciphered.
+        - key  (str): The key to use for ciphering. Cannot be empty.
+
+    Returns:
+        - The encrypted text.
+
+    >>> xor_cipher('Hello, world!', 'secret_key')
+    ';\x00\x0f\x1e\nX\x7f\x1c\n\x0b\x1f\x01B'
+    >>> xor_cipher(';\x00\x0f\x1e\nX\x7f\x1c\n\x0b\x1f\x01B', 'secret_key')
+    'Hello, world!'
+
+    >>> xor_cipher('Hello, world!', 424242)
+    '|WX^[\x1e\x14E[@XV\x15'
+    >>> xor_cipher('|WX^[\x1e\x14E[@XV\x15', 424242)
+    'Hello, world!'
+    """
+    if not key:
+        raise ValueError("key must not be empty")
+    key = str(key)
+    return "".join(
+        chr(ord(char) ^ ord(key[i % len(key)]))
+        for i, char in enumerate(text)
+    )

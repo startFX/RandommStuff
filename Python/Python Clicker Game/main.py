@@ -8,6 +8,7 @@ from pathlib import Path
 import clicker_functions as cf
 
 ### CONSTANTS
+SECRET_SAVEFILE = "bf8ea817733411da898d0fb6e77aed49ad7907f8a2271105419740e3a1a3b407"
 SAVE_FILE_SECRET_MESSAGE = "Good job on decoding the save file! Don't cheat. You've been warned."
 FILE_NAME = "clicker_game"      # NOT the actual file name but the one used in separate files like saves and configs.
 SAVE_FILE_SUFFIX =".save.txt"
